@@ -1,0 +1,319 @@
+		coeff	coeffLCI	coeffUCI	OR	ORLCI	ORUCI	p	llrp
+AgeBins	constant	0.21	0.02	0.40	1.23	1.02	1.49	0.03	1.00
+AgeBins	Binned Ages - 36-45	0.40	0.10	0.69	1.49	1.11	1.99	0.01	0.00
+AgeBins	Binned Ages - 46-55	0.55	0.26	0.83	1.73	1.30	2.29	0.00	0.00
+AgeBins	Binned Ages - >=56	0.73	0.48	0.98	2.07	1.61	2.66	0.00	0.00
+Gender	constant	0.83	0.68	0.97	2.29	1.97	2.65	0.00	1.00
+Gender	T0 Patient gender - Female	-0.30	-0.49	-0.10	0.74	0.61	0.90	0.00	0.00
+T0_SIMD04	constant	0.47	0.28	0.66	1.60	1.32	1.93	0.00	1.00
+T0_SIMD04	T0 SIMD 2004 Quintile - 2	0.09	-0.18	0.36	1.10	0.84	1.43	0.51	0.08
+T0_SIMD04	T0 SIMD 2004 Quintile - 3	0.28	-0.03	0.58	1.32	0.97	1.79	0.08	0.08
+T0_SIMD04	T0 SIMD 2004 Quintile - 4	0.30	-0.01	0.60	1.35	0.99	1.82	0.06	0.08
+T0_SIMD04	T0 SIMD 2004 Quintile - 5	0.39	0.07	0.70	1.47	1.07	2.02	0.02	0.08
+T0_Inemployment	constant	0.97	0.83	1.11	2.64	2.29	3.05	0.00	1.00
+T0_Inemployment	T0 Socioeconomic - Are you in paid employment at the moment? - Yes	-0.60	-0.79	-0.41	0.55	0.45	0.67	0.00	0.00
+T0_IncapacityBenefitorDLA	constant	0.50	0.39	0.61	1.65	1.48	1.83	0.00	1.00
+T0_IncapacityBenefitorDLA	T0 Socioeconomic - Are you currently receiving incapacity benefit or disability living allowance? - Yes	0.85	0.58	1.11	2.33	1.79	3.04	0.00	0.00
+T0_HADSQ1	constant	0.58	0.38	0.78	1.78	1.46	2.18	0.00	1.00
+T0_HADSQ1	"T0 HADS Q1 - I feel tense or wound up - From time to time, occasionally"	0.00	-0.24	0.24	1.00	0.79	1.27	1.00	0.02
+T0_HADSQ1	T0 HADS Q1 - I feel tense or wound up - A lot of the time	0.29	-0.04	0.61	1.33	0.96	1.84	0.08	0.02
+T0_HADSQ1	T0 HADS Q1 - I feel tense or wound up - Most of the time	0.49	0.06	0.92	1.64	1.07	2.51	0.02	0.02
+T0_HADSQ2	constant	0.42	0.28	0.56	1.52	1.32	1.74	0.00	1.00
+T0_HADSQ2	T0 HADS Q2 - I still enjoy the things I used to enjoy - Not quite so much	0.29	0.08	0.51	1.34	1.08	1.66	0.01	0.00
+T0_HADSQ2	T0 HADS Q2 - I still enjoy the things I used to enjoy - Only a little	0.67	0.30	1.05	1.96	1.35	2.84	0.00	0.00
+T0_HADSQ2	T0 HADS Q2 - I still enjoy the things I used to enjoy - Hardly at all	0.83	0.47	1.18	2.29	1.61	3.27	0.00	0.00
+T0_HADSQ3	constant	0.60	0.47	0.73	1.82	1.60	2.07	0.00	1.00
+T0_HADSQ3	"T0 HADS Q3 - I get a sort of frightened feeling as if something awful is about to happen - A little, but it doesn't worry me"	0.17	-0.08	0.41	1.18	0.93	1.51	0.18	0.04
+T0_HADSQ3	"T0 HADS Q3 - I get a sort of frightened feeling as if something awful is about to happen - Yes, but not too badly"	-0.09	-0.36	0.19	0.92	0.70	1.20	0.54	0.04
+T0_HADSQ3	T0 HADS Q3 - I get a sort of frightened feeling as if something awful is about to happen - Very definitely and quite badly	0.50	0.08	0.91	1.65	1.09	2.49	0.02	0.04
+T0_HADSQ4	constant	0.62	0.51	0.73	1.86	1.67	2.08	0.00	1.00
+T0_HADSQ4	T0 HADS Q4 - I can laugh and see the funny side of things - Not quite so much now	0.02	-0.22	0.26	1.02	0.81	1.30	0.84	0.08
+T0_HADSQ4	T0 HADS Q4 - I can laugh and see the funny side of things - Definitely not so much now	0.45	-0.03	0.93	1.57	0.97	2.52	0.07	0.08
+T0_HADSQ4	T0 HADS Q4 - I can laugh and see the funny side of things - Not at all	1.05	-0.19	2.29	2.86	0.83	9.88	0.10	0.08
+T0_HADSQ5	constant	0.63	0.47	0.80	1.88	1.59	2.22	0.00	1.00
+T0_HADSQ5	"T0 HADS Q5 - Worrying thoughts go through my mind - From time to time, but not too often"	-0.05	-0.28	0.17	0.95	0.76	1.19	0.64	0.19
+T0_HADSQ5	T0 HADS Q5 - Worrying thoughts go through my mind - A lot of the time	0.09	-0.19	0.37	1.09	0.83	1.44	0.54	0.19
+T0_HADSQ5	T0 HADS Q5 - Worrying thoughts go through my mind - A great deal of the time	0.33	-0.04	0.70	1.39	0.96	2.01	0.08	0.19
+T0_HADSQ6	constant	0.57	0.45	0.69	1.76	1.56	1.98	0.00	1.00
+T0_HADSQ6	T0 HADS Q6 - I feel cheerful - Sometimes	0.11	-0.11	0.32	1.11	0.90	1.38	0.34	0.00
+T0_HADSQ6	T0 HADS Q6 - I feel cheerful - Not often	0.83	0.38	1.28	2.29	1.46	3.61	0.00	0.00
+T0_HADSQ6	T0 HADS Q6 - I feel cheerful - Not at all	0.87	-0.11	1.85	2.38	0.89	6.37	0.08	0.00
+T0_HADSQ7	constant	0.51	0.36	0.66	1.67	1.43	1.94	0.00	1.00
+T0_HADSQ7	T0 HADS Q7 - I can sit at ease and feel relaxed - Usually	0.06	-0.15	0.27	1.06	0.86	1.31	0.59	0.00
+T0_HADSQ7	T0 HADS Q7 - I can sit at ease and feel relaxed - Not often	0.48	0.18	0.78	1.61	1.20	2.17	0.00	0.00
+T0_HADSQ7	T0 HADS Q7 - I can sit at ease and feel relaxed - Not at all	1.42	0.74	2.10	4.14	2.09	8.17	0.00	0.00
+T0_HADSQ8	constant	0.15	-0.05	0.34	1.16	0.95	1.41	0.14	1.00
+T0_HADSQ8	T0 HADS Q8 - I feel as if I am slowed down - Sometimes	0.39	0.15	0.64	1.48	1.16	1.90	0.00	0.00
+T0_HADSQ8	T0 HADS Q8 - I feel as if I am slowed down - Very often	0.75	0.44	1.05	2.11	1.56	2.87	0.00	0.00
+T0_HADSQ8	T0 HADS Q8 - I feel as if I am slowed down - Nearly all the time	1.22	0.90	1.54	3.39	2.47	4.67	0.00	0.00
+T0_HADSQ9	constant	0.71	0.58	0.85	2.04	1.78	2.33	0.00	1.00
+T0_HADSQ9	T0 HADS Q9 - I get a sort of frightened feeling like butterflies in the stomach - Sometimes	-0.21	-0.41	-0.01	0.81	0.66	0.99	0.04	0.02
+T0_HADSQ9	T0 HADS Q9 - I get a sort of frightened feeling like butterflies in the stomach - Very often	0.25	-0.14	0.64	1.29	0.87	1.90	0.21	0.02
+T0_HADSQ9	T0 HADS Q9 - I get a sort of frightened feeling like butterflies in the stomach - Nearly all the time	0.50	-0.18	1.19	1.65	0.83	3.28	0.15	0.02
+T0_HADSQ10	constant	0.58	0.47	0.69	1.79	1.60	2.00	0.00	1.00
+T0_HADSQ10	T0 HADS Q10 - I have lost interest in my appearance - I may not take quite as much care	0.15	-0.11	0.42	1.16	0.89	1.52	0.26	0.04
+T0_HADSQ10	T0 HADS Q10 - I have lost interest in my appearance - I don't take as much care as I should	0.40	0.06	0.75	1.50	1.06	2.11	0.02	0.04
+T0_HADSQ10	T0 HADS Q10 - I have lost interest in my appearance - Definitely	0.58	-0.11	1.26	1.78	0.90	3.54	0.10	0.04
+T0_HADSQ11	constant	0.47	0.30	0.63	1.59	1.36	1.87	0.00	1.00
+T0_HADSQ11	T0 HADS Q11 - I feel restless as if I have to be on the move - Not very much	0.21	-0.02	0.45	1.24	0.98	1.56	0.08	0.01
+T0_HADSQ11	T0 HADS Q11 - I feel restless as if I have to be on the move - Quite a lot	0.31	0.06	0.56	1.36	1.06	1.74	0.02	0.01
+T0_HADSQ11	T0 HADS Q11 - I feel restless as if I have to be on the move - Very much indeed	0.54	0.16	0.92	1.71	1.17	2.51	0.01	0.01
+T0_HADSQ12	constant	0.44	0.31	0.56	1.55	1.37	1.75	0.00	1.00
+T0_HADSQ12	T0 HADS Q12 - I look forward with enjoyment to things - Rather less than I used to	0.44	0.22	0.67	1.56	1.24	1.96	0.00	0.00
+T0_HADSQ12	T0 HADS Q12 - I look forward with enjoyment to things - Definitely less than I used to	0.72	0.36	1.08	2.06	1.44	2.95	0.00	0.00
+T0_HADSQ12	T0 HADS Q12 - I look forward with enjoyment to things - Hardly at all	0.87	0.36	1.38	2.39	1.44	3.98	0.00	0.00
+T0_HADSQ13	constant	0.63	0.50	0.76	1.87	1.65	2.13	0.00	1.00
+T0_HADSQ13	T0 HADS Q13 - I get sudden feelings of panic - Not very often	-0.02	-0.23	0.20	0.98	0.79	1.22	0.87	0.01
+T0_HADSQ13	T0 HADS Q13 - I get sudden feelings of panic - Quite often	0.07	-0.23	0.37	1.07	0.79	1.45	0.64	0.01
+T0_HADSQ13	T0 HADS Q13 - I get sudden feelings of panic - Very often indeed	1.29	0.43	2.16	3.65	1.53	8.68	0.00	0.01
+T0_HADSQ14	constant	0.54	0.43	0.65	1.71	1.53	1.91	0.00	1.00
+T0_HADSQ14	T0 HADS Q14 - I can enjoy a good book or radio or TV programme - Sometimes	0.36	0.10	0.61	1.43	1.11	1.84	0.01	0.00
+T0_HADSQ14	T0 HADS Q14 - I can enjoy a good book or radio or TV programme - Not often	0.66	0.14	1.19	1.94	1.15	3.28	0.01	0.00
+T0_HADSQ14	T0 HADS Q14 - I can enjoy a good book or radio or TV programme - Very seldom	0.89	0.27	1.50	2.43	1.31	4.50	0.00	0.00
+T0_SF12Q1	constant	2.10	1.54	2.65	8.14	4.67	14.19	0.00	1.00
+T0_SF12Q1	T0 SF12 Q1 (General Health 1) - In general would you say your health is... - Fair	-1.02	-1.61	-0.42	0.36	0.20	0.66	0.00	0.00
+T0_SF12Q1	T0 SF12 Q1 (General Health 1) - In general would you say your health is... - Good	-1.58	-2.15	-1.00	0.21	0.12	0.37	0.00	0.00
+T0_SF12Q1	T0 SF12 Q1 (General Health 1) - In general would you say your health is... - Very Good	-1.63	-2.22	-1.05	0.20	0.11	0.35	0.00	0.00
+T0_SF12Q1	T0 SF12 Q1 (General Health 1) - In general would you say your health is... - Excellent	-2.28	-2.96	-1.60	0.10	0.05	0.20	0.00	0.00
+T0_SF12Q2	constant	1.24	0.95	1.54	3.47	2.57	4.69	0.00	1.00
+T0_SF12Q2	T0 SF12 Q2 (Vitality 2) - In the past 4 weeks did you have a lot of energy? - A little of the time	-0.31	-0.70	0.07	0.73	0.50	1.07	0.11	0.00
+T0_SF12Q2	T0 SF12 Q2 (Vitality 2) - In the past 4 weeks did you have a lot of energy? - Some of the time	-0.61	-0.97	-0.26	0.54	0.38	0.77	0.00	0.00
+T0_SF12Q2	T0 SF12 Q2 (Vitality 2) - In the past 4 weeks did you have a lot of energy? - A good bit of the time	-0.78	-1.16	-0.41	0.46	0.31	0.67	0.00	0.00
+T0_SF12Q2	T0 SF12 Q2 (Vitality 2) - In the past 4 weeks did you have a lot of energy? - Most of the time	-0.87	-1.23	-0.51	0.42	0.29	0.60	0.00	0.00
+T0_SF12Q2	T0 SF12 Q2 (Vitality 2) - In the past 4 weeks did you have a lot of energy? - All of the time	-1.04	-1.64	-0.44	0.35	0.19	0.64	0.00	0.00
+T0_SF12Q3	constant	1.32	0.93	1.70	3.73	2.54	5.47	0.00	1.00
+T0_SF12Q3	"T0 SF12 Q3 (Bodily Pain 2) - During the past 4 weeks, how much did pain interfere with your normal work or housework? - Quite a bit"	-0.24	-0.70	0.22	0.79	0.49	1.25	0.31	0.00
+T0_SF12Q3	"T0 SF12 Q3 (Bodily Pain 2) - During the past 4 weeks, how much did pain interfere with your normal work or housework? - Moderately"	-0.51	-0.99	-0.04	0.60	0.37	0.96	0.03	0.00
+T0_SF12Q3	"T0 SF12 Q3 (Bodily Pain 2) - During the past 4 weeks, how much did pain interfere with your normal work or housework? - A little bit"	-0.83	-1.26	-0.39	0.44	0.28	0.68	0.00	0.00
+T0_SF12Q3	"T0 SF12 Q3 (Bodily Pain 2) - During the past 4 weeks, how much did pain interfere with your normal work or housework? - Not at all"	-0.87	-1.28	-0.46	0.42	0.28	0.63	0.00	0.00
+T0_SF12Q4	constant	1.41	1.16	1.66	4.10	3.20	5.25	0.00	1.00
+T0_SF12Q4	"T0 SF12 Q4 (Physical Functioning 2) - Does your health now limit you in moderate activities such as moving a table, pushing a vacuum cleaner or playing golf? - Yes, limited a little"	-0.66	-0.97	-0.35	0.52	0.38	0.71	0.00	0.00
+T0_SF12Q4	"T0 SF12 Q4 (Physical Functioning 2) - Does your health now limit you in moderate activities such as moving a table, pushing a vacuum cleaner or playing golf? - No, not limited at all"	-1.05	-1.33	-0.78	0.35	0.26	0.46	0.00	0.00
+T0_SF12Q5	constant	0.89	0.74	1.04	2.45	2.10	2.84	0.00	1.00
+T0_SF12Q5	T0 SF12 Q5 (Role Physical 2) - In the last 4 weeks have you accomplished less than you would like at work as a result of your physical health? - No	-0.42	-0.61	-0.22	0.66	0.54	0.80	0.00	0.00
+T0_SF12Q6	constant	0.92	0.71	1.12	2.50	2.04	3.08	0.00	1.00
+T0_SF12Q6	T0 SF12 Q6 (Role Emotional 2) - In the last 4 weeks have you accomplished less than you would like at work as a result of any emotional problems (such as feeling depressed or anxious)? - No	-0.34	-0.57	-0.10	0.71	0.57	0.90	0.00	0.00
+T0_SF12Q7	constant	2.04	1.19	2.89	7.67	3.27	17.95	0.00	1.00
+T0_SF12Q7	T0 SF12 Q7 (Mental Health 4) - In the last 4 weeks have you felt downhearted and low? - Most of the time	-1.01	-1.98	-0.04	0.36	0.14	0.96	0.04	0.00
+T0_SF12Q7	T0 SF12 Q7 (Mental Health 4) - In the last 4 weeks have you felt downhearted and low? - A good bit of the time	-0.90	-1.82	0.02	0.41	0.16	1.02	0.06	0.00
+T0_SF12Q7	T0 SF12 Q7 (Mental Health 4) - In the last 4 weeks have you felt downhearted and low? - Some of the time	-1.50	-2.37	-0.63	0.22	0.09	0.53	0.00	0.00
+T0_SF12Q7	T0 SF12 Q7 (Mental Health 4) - In the last 4 weeks have you felt downhearted and low? - A little of the time	-1.41	-2.28	-0.54	0.24	0.10	0.58	0.00	0.00
+T0_SF12Q7	T0 SF12 Q7 (Mental Health 4) - In the last 4 weeks have you felt downhearted and low? - None of the time	-1.53	-2.39	-0.66	0.22	0.09	0.52	0.00	0.00
+T0_SF12Q8	constant	1.33	0.88	1.78	3.79	2.42	5.95	0.00	1.00
+T0_SF12Q8	T0 SF12 Q8 (Mental Health 3) - In the last 4 weeks have you felt calm and peaceful? - A little of the time	-0.51	-1.03	0.01	0.60	0.36	1.01	0.05	0.00
+T0_SF12Q8	T0 SF12 Q8 (Mental Health 3) - In the last 4 weeks have you felt calm and peaceful? - Some of the time	-0.59	-1.07	-0.10	0.56	0.34	0.90	0.02	0.00
+T0_SF12Q8	T0 SF12 Q8 (Mental Health 3) - In the last 4 weeks have you felt calm and peaceful? - A good bit of the time	-0.69	-1.20	-0.19	0.50	0.30	0.83	0.01	0.00
+T0_SF12Q8	T0 SF12 Q8 (Mental Health 3) - In the last 4 weeks have you felt calm and peaceful? - Most of the time	-0.96	-1.44	-0.47	0.38	0.24	0.62	0.00	0.00
+T0_SF12Q8	T0 SF12 Q8 (Mental Health 3) - In the last 4 weeks have you felt calm and peaceful? - All of the time	-0.65	-1.24	-0.07	0.52	0.29	0.94	0.03	0.00
+T0_SF12Q9	constant	1.24	0.85	1.64	3.47	2.34	5.14	0.00	1.00
+T0_SF12Q9	"T0 SF12 Q9 (Social Functioning 2) - In the past 4 weeks, how much of the time has your physical health or emotional problems interfered with your social activites (like visiting friends, relatives etc.)? - Most of the time"	-0.20	-0.70	0.31	0.82	0.50	1.36	0.44	0.00
+T0_SF12Q9	"T0 SF12 Q9 (Social Functioning 2) - In the past 4 weeks, how much of the time has your physical health or emotional problems interfered with your social activites (like visiting friends, relatives etc.)? - Some of the time"	-0.45	-0.91	0.00	0.64	0.40	1.00	0.05	0.00
+T0_SF12Q9	"T0 SF12 Q9 (Social Functioning 2) - In the past 4 weeks, how much of the time has your physical health or emotional problems interfered with your social activites (like visiting friends, relatives etc.)? - A little of the time"	-0.91	-1.36	-0.46	0.40	0.26	0.63	0.00	0.00
+T0_SF12Q9	"T0 SF12 Q9 (Social Functioning 2) - In the past 4 weeks, how much of the time has your physical health or emotional problems interfered with your social activites (like visiting friends, relatives etc.)? - None of the time"	-0.68	-1.10	-0.26	0.51	0.33	0.77	0.00	0.00
+T0_SF12Q10	constant	1.43	1.18	1.67	4.16	3.26	5.31	0.00	1.00
+T0_SF12Q10	"T0 SF12 Q10 (Physical Functioning 4) - Does your health now limit you in climbing several flights of stairs? - Yes, limited a little"	-0.49	-0.81	-0.17	0.61	0.44	0.85	0.00	0.00
+T0_SF12Q10	"T0 SF12 Q10 (Physical Functioning 4) - Does your health now limit you in climbing several flights of stairs? - No, not limited at all"	-1.12	-1.40	-0.85	0.32	0.25	0.43	0.00	0.00
+T0_SF12Q11	constant	1.06	0.90	1.22	2.88	2.46	3.37	0.00	1.00
+T0_SF12Q11	T0 SF12 Q11 (Role Physical 3) - In the last 4 weeks have you been limited in the work you could do as a result of your physical health? - No	-0.67	-0.87	-0.47	0.51	0.42	0.63	0.00	0.00
+T0_SF12Q12	constant	0.91	0.69	1.13	2.49	2.00	3.10	0.00	1.00
+T0_SF12Q12	T0 SF12 Q12 (Role Emotional 3) - In the last 4 weeks have you not done work or other activities as carefully as usual as a result of any emotional problems (such as feeling depressed or anxious)? - No	-0.32	-0.56	-0.08	0.73	0.57	0.93	0.01	0.01
+T0_IPQ1	constant	-0.29	-0.59	0.00	0.75	0.55	1.00	0.05	1.00
+T0_IPQ1	T0 IPQ Q1 - My symptoms are likely to be permanent rather than temporary - Disagree	0.41	0.06	0.77	1.51	1.06	2.16	0.02	0.00
+T0_IPQ1	T0 IPQ Q1 - My symptoms are likely to be permanent rather than temporary - Neither	1.10	0.74	1.46	3.01	2.11	4.30	0.00	0.00
+T0_IPQ1	T0 IPQ Q1 - My symptoms are likely to be permanent rather than temporary - Agree	1.37	1.02	1.73	3.95	2.78	5.62	0.00	0.00
+T0_IPQ1	T0 IPQ Q1 - My symptoms are likely to be permanent rather than temporary - Strongly Agree	1.46	1.06	1.87	4.31	2.87	6.47	0.00	0.00
+T0_IPQ2	constant	0.26	-0.04	0.55	1.29	0.96	1.73	0.09	1.00
+T0_IPQ2	T0 IPQ Q2 - Nothing I do will affect my symptoms - Disagree	0.33	0.00	0.67	1.40	1.00	1.95	0.05	0.00
+T0_IPQ2	T0 IPQ Q2 - Nothing I do will affect my symptoms - Neither	0.50	0.13	0.86	1.65	1.14	2.37	0.01	0.00
+T0_IPQ2	T0 IPQ Q2 - Nothing I do will affect my symptoms - Agree	0.47	0.11	0.82	1.60	1.12	2.28	0.01	0.00
+T0_IPQ2	T0 IPQ Q2 - Nothing I do will affect my symptoms - Strongly Agree	0.84	0.38	1.31	2.32	1.46	3.70	0.00	0.00
+T0_IPQ3	constant	0.71	0.41	1.01	2.03	1.51	2.73	0.00	1.00
+T0_IPQ3	T0 IPQ Q3 - My symptoms are a mystery to me - Disagree	-0.23	-0.58	0.12	0.79	0.56	1.12	0.19	0.02
+T0_IPQ3	T0 IPQ Q3 - My symptoms are a mystery to me - Neither	-0.18	-0.58	0.22	0.84	0.56	1.24	0.37	0.02
+T0_IPQ3	T0 IPQ Q3 - My symptoms are a mystery to me - Agree	-0.02	-0.36	0.32	0.98	0.69	1.38	0.90	0.02
+T0_IPQ3	T0 IPQ Q3 - My symptoms are a mystery to me - Strongly Agree	0.29	-0.10	0.69	1.34	0.90	1.99	0.14	0.02
+T0_IPQ4	constant	0.56	0.36	0.75	1.75	1.44	2.12	0.00	1.00
+T0_IPQ4	T0 IPQ Q4 - I get angry when I think about my symptoms - Disagree	0.00	-0.26	0.26	1.00	0.77	1.29	0.99	0.18
+T0_IPQ4	T0 IPQ Q4 - I get angry when I think about my symptoms - Neither	0.25	-0.07	0.57	1.28	0.93	1.76	0.13	0.18
+T0_IPQ4	T0 IPQ Q4 - I get angry when I think about my symptoms - Agree	0.21	-0.07	0.50	1.24	0.93	1.65	0.14	0.18
+T0_IPQ4	T0 IPQ Q4 - I get angry when I think about my symptoms - Strongly Agree	0.31	-0.10	0.73	1.37	0.90	2.07	0.14	0.18
+T0_IPQ5	constant	0.51	0.30	0.73	1.67	1.35	2.08	0.00	1.00
+T0_IPQ5	T0 IPQ Q5 - When I think about my symptoms I get upset - Disagree	0.11	-0.16	0.38	1.12	0.85	1.47	0.43	0.26
+T0_IPQ5	T0 IPQ Q5 - When I think about my symptoms I get upset - Neither	0.22	-0.11	0.55	1.25	0.90	1.74	0.19	0.26
+T0_IPQ5	T0 IPQ Q5 - When I think about my symptoms I get upset - Agree	0.17	-0.11	0.46	1.19	0.90	1.58	0.23	0.26
+T0_IPQ5	T0 IPQ Q5 - When I think about my symptoms I get upset - Strongly Agree	0.50	0.03	0.97	1.65	1.03	2.65	0.04	0.26
+T0_IPQ6	constant	0.65	0.26	1.04	1.92	1.30	2.84	0.00	1.00
+T0_IPQ6	T0 IPQ Q6 - My doctor understands the cause of my symptoms - Disagree	0.17	-0.29	0.63	1.18	0.74	1.88	0.48	0.36
+T0_IPQ6	T0 IPQ Q6 - My doctor understands the cause of my symptoms - Neither	-0.02	-0.46	0.41	0.98	0.63	1.51	0.91	0.36
+T0_IPQ6	T0 IPQ Q6 - My doctor understands the cause of my symptoms - Agree	-0.08	-0.50	0.34	0.92	0.61	1.40	0.71	0.36
+T0_IPQ6	T0 IPQ Q6 - My doctor understands the cause of my symptoms - Strongly Agree	0.16	-0.31	0.63	1.17	0.73	1.87	0.51	0.36
+T0_Worryingalot	constant	0.58	0.46	0.70	1.79	1.58	2.02	0.00	1.00
+T0_Worryingalot	T0 Neurological Symptom 15/PRIME MD Q5 - Worrying about a lot of different things - Yes	0.20	0.00	0.40	1.22	1.00	1.49	0.04	0.04
+T0_Wserious	constant	0.49	0.38	0.59	1.63	1.46	1.81	0.00	1.00
+T0_Wserious	T0 Whiteley Index - Do you think there is something seriously wrong with your body? - Yes	0.76	0.52	1.01	2.14	1.68	2.73	0.00	0.00
+T0_Wworry	constant	0.60	0.49	0.71	1.82	1.63	2.04	0.00	1.00
+T0_Wworry	T0 Whiteley Index - Do you worry a lot about your health? - Yes	0.21	-0.01	0.42	1.23	0.99	1.53	0.06	0.06
+T0_Wbelieve	constant	0.57	0.47	0.68	1.78	1.59	1.98	0.00	1.00
+T0_Wbelieve	T0 Whiteley Index - Is it hard for you to believe the doctor when he tells you there is nothing to worry about? - Yes	0.37	0.14	0.61	1.45	1.15	1.84	0.00	0.00
+T0_Wseriousworry	constant	0.59	0.48	0.70	1.81	1.62	2.02	0.00	1.00
+T0_Wseriousworry	T0 Whiteley Index - Do you often worry about the possibility that you have a serious illness? - Yes	0.26	0.04	0.48	1.30	1.04	1.62	0.02	0.02
+T0_Wpain	constant	0.50	0.38	0.62	1.64	1.46	1.85	0.00	1.00
+T0_Wpain	T0 Whiteley Index - Are you bothered by many different aches and pains? - Yes	0.45	0.24	0.65	1.56	1.28	1.91	0.00	0.00
+T0_Wattention	constant	0.65	0.55	0.75	1.91	1.73	2.11	0.00	1.00
+T0_Wattention	"T0 Whiteley Index - If a disease is brought to your attention (e.g. on TV, radio, in the newspapers or by someone you know), do you worry about getting it yourself? - Yes"	0.15	-0.20	0.49	1.16	0.82	1.64	0.40	0.40
+T0_Wsymptoms	constant	0.51	0.40	0.63	1.67	1.50	1.87	0.00	1.00
+T0_Wsymptoms	T0 Whiteley Index - Do you find that you are bothered by many different symptoms? - Yes	0.54	0.31	0.76	1.71	1.37	2.13	0.00	0.00
+T0_C1	constant	1.27	0.75	1.79	3.56	2.11	6.00	0.00	1.00
+T0_C1	T0 Causal Attribution Q1 - Hereditary - Strongly Disagree	-0.76	-1.31	-0.21	0.47	0.27	0.81	0.01	0.04
+T0_C1	T0 Causal Attribution Q1 - Hereditary - Disagree	-0.59	-1.14	-0.04	0.55	0.32	0.96	0.03	0.04
+T0_C1	T0 Causal Attribution Q1 - Hereditary - Neither	-0.46	-1.05	0.12	0.63	0.35	1.13	0.12	0.04
+T0_C1	T0 Causal Attribution Q1 - Hereditary - Agree	-0.64	-1.22	-0.06	0.53	0.30	0.95	0.03	0.04
+T0_C2	constant	0.29	-0.24	0.82	1.33	0.79	2.26	0.29	1.00
+T0_C2	T0 Causal Attribution Q2 - Infection - Strongly Disagree	0.38	-0.18	0.94	1.46	0.84	2.55	0.18	0.25
+T0_C2	T0 Causal Attribution Q2 - Infection - Disagree	0.42	-0.13	0.97	1.52	0.88	2.63	0.14	0.25
+T0_C2	T0 Causal Attribution Q2 - Infection - Neither	0.46	-0.12	1.05	1.59	0.89	2.85	0.12	0.25
+T0_C2	T0 Causal Attribution Q2 - Infection - Agree	0.12	-0.48	0.73	1.13	0.62	2.07	0.69	0.25
+T0_C3	constant	0.27	-0.38	0.92	1.31	0.68	2.52	0.41	1.00
+T0_C3	T0 Causal Attribution Q3 - Diet - Strongly Disagree	0.29	-0.38	0.97	1.34	0.68	2.63	0.39	0.02
+T0_C3	T0 Causal Attribution Q3 - Diet - Disagree	0.59	-0.08	1.26	1.80	0.92	3.51	0.09	0.02
+T0_C3	T0 Causal Attribution Q3 - Diet - Neither	0.25	-0.44	0.95	1.29	0.64	2.58	0.47	0.02
+T0_C3	T0 Causal Attribution Q3 - Diet - Agree	0.22	-0.48	0.92	1.25	0.62	2.50	0.54	0.02
+T0_C4	constant	1.01	0.61	1.40	2.74	1.85	4.05	0.00	1.00
+T0_C4	T0 Causal Attribution Q4 - Chance - Strongly Disagree	-0.50	-0.95	-0.06	0.61	0.39	0.94	0.03	0.02
+T0_C4	T0 Causal Attribution Q4 - Chance - Disagree	-0.53	-0.96	-0.09	0.59	0.38	0.91	0.02	0.02
+T0_C4	T0 Causal Attribution Q4 - Chance - Neither	-0.24	-0.69	0.22	0.79	0.50	1.25	0.32	0.02
+T0_C4	T0 Causal Attribution Q4 - Chance - Agree	-0.23	-0.66	0.20	0.80	0.52	1.23	0.30	0.02
+T0_C5	constant	1.35	0.52	2.18	3.86	1.68	8.86	0.00	1.00
+T0_C5	T0 Causal Attribution Q5 - Medical - Strongly Disagree	-0.82	-1.67	0.02	0.44	0.19	1.02	0.06	0.09
+T0_C5	T0 Causal Attribution Q5 - Medical - Disagree	-0.67	-1.51	0.17	0.51	0.22	1.19	0.12	0.09
+T0_C5	T0 Causal Attribution Q5 - Medical - Neither	-0.66	-1.56	0.25	0.52	0.21	1.28	0.15	0.09
+T0_C5	T0 Causal Attribution Q5 - Medical - Agree	-0.29	-1.29	0.71	0.75	0.28	2.03	0.57	0.09
+T0_C6	constant	0.46	-0.07	1.00	1.59	0.93	2.71	0.09	1.00
+T0_C6	T0 Causal Attribution Q6 - Overwork - Strongly Disagree	0.16	-0.40	0.73	1.18	0.67	2.07	0.57	0.10
+T0_C6	T0 Causal Attribution Q6 - Overwork - Disagree	0.24	-0.31	0.80	1.27	0.73	2.22	0.39	0.10
+T0_C6	T0 Causal Attribution Q6 - Overwork - Neither	0.41	-0.18	1.00	1.51	0.84	2.71	0.17	0.10
+T0_C6	T0 Causal Attribution Q6 - Overwork - Agree	-0.03	-0.61	0.55	0.97	0.54	1.73	0.91	0.10
+T0_C7	constant	0.71	0.33	1.08	2.03	1.39	2.96	0.00	1.00
+T0_C7	T0 Causal Attribution Q7 - Stress - Strongly Disagree	-0.02	-0.46	0.42	0.98	0.63	1.52	0.93	0.36
+T0_C7	T0 Causal Attribution Q7 - Stress - Disagree	0.02	-0.40	0.44	1.02	0.67	1.55	0.93	0.36
+T0_C7	T0 Causal Attribution Q7 - Stress - Neither	0.06	-0.40	0.51	1.06	0.67	1.66	0.81	0.36
+T0_C7	T0 Causal Attribution Q7 - Stress - Agree	-0.21	-0.62	0.21	0.81	0.54	1.24	0.33	0.36
+T0_C8	constant	0.74	0.23	1.25	2.09	1.26	3.48	0.00	1.00
+T0_C8	T0 Causal Attribution Q8 - Emotional - Strongly Disagree	-0.10	-0.64	0.44	0.90	0.53	1.55	0.72	0.60
+T0_C8	T0 Causal Attribution Q8 - Emotional - Disagree	-0.11	-0.64	0.42	0.90	0.53	1.53	0.69	0.60
+T0_C8	T0 Causal Attribution Q8 - Emotional - Neither	0.12	-0.45	0.70	1.13	0.64	2.01	0.68	0.60
+T0_C8	T0 Causal Attribution Q8 - Emotional - Agree	-0.15	-0.71	0.41	0.86	0.49	1.51	0.61	0.60
+T0_C9	constant	1.19	0.70	1.68	3.29	2.02	5.36	0.00	1.00
+T0_C9	T0 Causal Attribution Q9 - Ageing - Strongly Disagree	-0.78	-1.31	-0.25	0.46	0.27	0.78	0.00	0.01
+T0_C9	T0 Causal Attribution Q9 - Ageing - Disagree	-0.62	-1.14	-0.10	0.54	0.32	0.91	0.02	0.01
+T0_C9	T0 Causal Attribution Q9 - Ageing - Neither	-0.51	-1.06	0.03	0.60	0.35	1.03	0.07	0.01
+T0_C9	T0 Causal Attribution Q9 - Ageing - Agree	-0.37	-0.89	0.15	0.69	0.41	1.16	0.17	0.01
+T0_C10	constant	0.62	0.07	1.16	1.85	1.07	3.19	0.03	1.00
+T0_C10	T0 Causal Attribution Q10 - Smoking - Strongly Disagree	0.02	-0.54	0.59	1.02	0.58	1.80	0.94	0.70
+T0_C10	T0 Causal Attribution Q10 - Smoking - Disagree	0.13	-0.43	0.70	1.14	0.65	2.02	0.64	0.70
+T0_C10	T0 Causal Attribution Q10 - Smoking - Neither	-0.03	-0.64	0.59	0.97	0.52	1.80	0.93	0.70
+T0_C10	T0 Causal Attribution Q10 - Smoking - Agree	-0.08	-0.69	0.54	0.93	0.50	1.71	0.81	0.70
+T0_C11	constant	0.47	-0.18	1.12	1.60	0.84	3.05	0.15	1.00
+T0_C11	T0 Causal Attribution Q11 - Medication - Strongly Disagree	0.10	-0.56	0.77	1.11	0.57	2.15	0.76	0.44
+T0_C11	T0 Causal Attribution Q11 - Medication - Disagree	0.19	-0.48	0.85	1.20	0.62	2.34	0.58	0.44
+T0_C11	T0 Causal Attribution Q11 - Medication - Neither	0.36	-0.33	1.06	1.44	0.72	2.88	0.31	0.44
+T0_C11	T0 Causal Attribution Q11 - Medication - Agree	0.31	-0.41	1.03	1.37	0.66	2.81	0.40	0.44
+T0_C12	constant	1.05	0.63	1.47	2.86	1.88	4.37	0.00	1.00
+T0_C12	T0 Causal Attribution Q12 - Accident - Strongly Disagree	-0.40	-0.86	0.05	0.67	0.42	1.05	0.08	0.33
+T0_C12	T0 Causal Attribution Q12 - Accident - Disagree	-0.43	-0.88	0.03	0.65	0.42	1.03	0.07	0.33
+T0_C12	T0 Causal Attribution Q12 - Accident - Neither	-0.51	-1.02	-0.01	0.60	0.36	0.99	0.04	0.33
+T0_C12	T0 Causal Attribution Q12 - Accident - Agree	-0.33	-0.84	0.17	0.72	0.43	1.18	0.19	0.33
+T0_Sat1	constant	0.62	0.47	0.78	1.87	1.60	2.18	0.00	1.00
+T0_Sat1	T0 Satisfaction - The visit overall? - Poor	0.36	-0.98	1.69	1.43	0.38	5.43	0.60	0.25
+T0_Sat1	T0 Satisfaction - The visit overall? - Fair	0.54	0.01	1.06	1.71	1.01	2.90	0.04	0.25
+T0_Sat1	T0 Satisfaction - The visit overall? - Good	0.10	-0.18	0.37	1.10	0.84	1.45	0.50	0.25
+T0_Sat1	T0 Satisfaction - The visit overall? - Very Good	-0.02	-0.24	0.20	0.98	0.79	1.22	0.86	0.25
+T0_Sat2	constant	0.67	0.53	0.80	1.95	1.70	2.24	0.00	1.00
+T0_Sat2	"T0 Satisfaction - The thoroughness, carefulness and competence of the doctor you saw? - Poor"	0.72	-1.48	2.91	2.05	0.23	18.41	0.52	0.38
+T0_Sat2	"T0 Satisfaction - The thoroughness, carefulness and competence of the doctor you saw? - Fair"	0.26	-0.35	0.87	1.30	0.70	2.40	0.40	0.38
+T0_Sat2	"T0 Satisfaction - The thoroughness, carefulness and competence of the doctor you saw? - Good"	0.16	-0.15	0.48	1.18	0.86	1.62	0.31	0.38
+T0_Sat2	"T0 Satisfaction - The thoroughness, carefulness and competence of the doctor you saw? - Very Good"	-0.11	-0.32	0.10	0.90	0.73	1.11	0.31	0.38
+T0_Sat3	constant	0.65	0.52	0.78	1.92	1.69	2.19	0.00	1.00
+T0_Sat3	"T0 Satisfaction - The personal manner (courtesy, respect, sensitivity, friendliness) of the doctor you saw? - Poor"	1.29	-0.81	3.39	3.64	0.45	29.71	0.23	0.66
+T0_Sat3	"T0 Satisfaction - The personal manner (courtesy, respect, sensitivity, friendliness) of the doctor you saw? - Fair"	0.01	-0.63	0.64	1.01	0.53	1.90	0.99	0.66
+T0_Sat3	"T0 Satisfaction - The personal manner (courtesy, respect, sensitivity, friendliness) of the doctor you saw? - Good"	-0.09	-0.40	0.23	0.92	0.67	1.26	0.59	0.66
+T0_Sat3	"T0 Satisfaction - The personal manner (courtesy, respect, sensitivity, friendliness) of the doctor you saw? - Very Good"	0.03	-0.18	0.25	1.03	0.83	1.28	0.77	0.66
+T0_Sat4	constant	0.70	0.47	0.93	2.02	1.61	2.53	0.00	1.00
+T0_Sat4	T0 Satisfaction - The length of time you waited between being referred by your doctor and seeing the neurologist today? - Poor	0.14	-0.16	0.44	1.15	0.85	1.55	0.37	0.17
+T0_Sat4	T0 Satisfaction - The length of time you waited between being referred by your doctor and seeing the neurologist today? - Fair	-0.06	-0.38	0.26	0.94	0.68	1.30	0.72	0.17
+T0_Sat4	T0 Satisfaction - The length of time you waited between being referred by your doctor and seeing the neurologist today? - Good	-0.17	-0.48	0.14	0.84	0.62	1.16	0.29	0.17
+T0_Sat4	T0 Satisfaction - The length of time you waited between being referred by your doctor and seeing the neurologist today? - Very Good	-0.18	-0.49	0.14	0.84	0.61	1.15	0.27	0.17
+T0_Sat5	constant	0.59	0.33	0.85	1.80	1.39	2.33	0.00	1.00
+T0_Sat5	T0 Satisfaction - Length of time spent waiting at the clinic today? - Poor	0.68	0.26	1.10	1.98	1.30	3.02	0.00	0.00
+T0_Sat5	T0 Satisfaction - Length of time spent waiting at the clinic today? - Fair	0.12	-0.21	0.45	1.13	0.81	1.57	0.47	0.00
+T0_Sat5	T0 Satisfaction - Length of time spent waiting at the clinic today? - Good	-0.05	-0.35	0.26	0.95	0.70	1.29	0.75	0.00
+T0_Sat5	T0 Satisfaction - Length of time spent waiting at the clinic today? - Very Good	-0.03	-0.35	0.30	0.97	0.70	1.35	0.88	0.00
+T0_Sat6	constant	0.71	0.54	0.88	2.04	1.72	2.42	0.00	1.00
+T0_Sat6	T0 Satisfaction - Convenience of the location of the clinic? - Poor	-0.14	-0.61	0.33	0.87	0.54	1.40	0.57	0.89
+T0_Sat6	T0 Satisfaction - Convenience of the location of the clinic? - Fair	-0.01	-0.32	0.31	0.99	0.73	1.36	0.97	0.89
+T0_Sat6	T0 Satisfaction - Convenience of the location of the clinic? - Good	-0.05	-0.32	0.21	0.95	0.72	1.24	0.69	0.89
+T0_Sat6	T0 Satisfaction - Convenience of the location of the clinic? - Very Good	-0.12	-0.36	0.13	0.89	0.70	1.14	0.36	0.89
+T0_Sat7	constant	0.71	0.55	0.87	2.04	1.74	2.39	0.00	1.00
+T0_Sat7	T0 Satisfaction - Time spent with the doctor you saw? - Poor	-0.15	-1.39	1.09	0.86	0.25	2.96	0.81	0.42
+T0_Sat7	T0 Satisfaction - Time spent with the doctor you saw? - Fair	0.20	-0.25	0.66	1.23	0.78	1.93	0.38	0.42
+T0_Sat7	T0 Satisfaction - Time spent with the doctor you saw? - Good	-0.02	-0.28	0.24	0.98	0.75	1.28	0.88	0.42
+T0_Sat7	T0 Satisfaction - Time spent with the doctor you saw? - Very Good	-0.16	-0.39	0.06	0.85	0.68	1.06	0.15	0.42
+T0_Sat8	constant	0.74	0.58	0.90	2.10	1.79	2.46	0.00	1.00
+T0_Sat8	T0 Satisfaction - Explanation given to you about the cause of your symptoms? - Poor	0.43	-0.33	1.19	1.54	0.72	3.30	0.27	0.09
+T0_Sat8	T0 Satisfaction - Explanation given to you about the cause of your symptoms? - Fair	-0.06	-0.44	0.32	0.94	0.64	1.38	0.77	0.09
+T0_Sat8	T0 Satisfaction - Explanation given to you about the cause of your symptoms? - Good	0.00	-0.26	0.27	1.00	0.77	1.30	0.99	0.09
+T0_Sat8	T0 Satisfaction - Explanation given to you about the cause of your symptoms? - Very Good	-0.27	-0.50	-0.04	0.77	0.61	0.97	0.02	0.09
+T0_StomachPain	constant	0.59	0.49	0.70	1.81	1.64	2.01	0.00	1.00
+T0_StomachPain	T0 PHQ15 Q1 - Stomach pain - Yes	0.47	0.18	0.75	1.59	1.19	2.13	0.00	0.00
+T0_BackPain	constant	0.49	0.37	0.61	1.63	1.45	1.84	0.00	1.00
+T0_BackPain	T0 PHQ15 Q2 - Back pain - Yes	0.47	0.27	0.68	1.61	1.31	1.97	0.00	0.00
+T0_Paininarmslegsjoints	constant	0.39	0.26	0.52	1.48	1.29	1.69	0.00	1.00
+T0_Paininarmslegsjoints	"T0 PHQ15 Q3 - Pain in your arms, legs or joints (Knees, hips, etc) - Yes"	0.54	0.35	0.74	1.72	1.42	2.09	0.00	0.00
+T0_Headaches	constant	0.68	0.55	0.81	1.97	1.74	2.24	0.00	1.00
+T0_Headaches	T0 PHQ15 Q5 - Headaches - Yes	-0.05	-0.24	0.15	0.95	0.79	1.16	0.63	0.63
+T0_Chestpain	constant	0.62	0.52	0.72	1.85	1.68	2.05	0.00	1.00
+T0_Chestpain	T0 PHQ15 Q6 - Chest pain - Yes	0.46	0.11	0.81	1.58	1.12	2.24	0.01	0.01
+T0_Dizziness	constant	0.65	0.53	0.76	1.91	1.70	2.15	0.00	1.00
+T0_Dizziness	T0 PHQ15 Q7- Dizziness - Yes	0.03	-0.17	0.24	1.03	0.84	1.27	0.75	0.75
+T0_FaintingSpells	constant	0.69	0.59	0.79	1.99	1.80	2.20	0.00	1.00
+T0_FaintingSpells	T0 PHQ15 Q8 - Fainting spells - Yes	-0.35	-0.69	-0.01	0.71	0.50	0.99	0.05	0.05
+T0_HeartPoundingorRacing	constant	0.61	0.50	0.72	1.84	1.65	2.05	0.00	1.00
+T0_HeartPoundingorRacing	T0 PHQ15 Q9 - Feeling your heart pound or race - Yes	0.23	-0.01	0.46	1.25	0.99	1.59	0.06	0.06
+T0_ShortnessofBreath	constant	0.56	0.45	0.67	1.75	1.57	1.94	0.00	1.00
+T0_ShortnessofBreath	T0 PHQ15 Q10 - Shortness of breath - Yes	0.53	0.28	0.78	1.70	1.32	2.19	0.00	0.00
+T0_Constipation	constant	0.53	0.42	0.64	1.69	1.51	1.89	0.00	1.00
+T0_Constipation	"T0 PHQ15 Q12 - Constipation, loose bowels or diarrhoea - Yes"	0.52	0.30	0.75	1.69	1.34	2.12	0.00	0.00
+T0_NauseaorGas	constant	0.55	0.44	0.66	1.73	1.55	1.94	0.00	1.00
+T0_NauseaorGas	"T0 PHQ15 Q13 - Nausea, gas or indigestion - Yes"	0.37	0.15	0.58	1.44	1.17	1.79	0.00	0.00
+T0_Tired	constant	0.47	0.31	0.63	1.60	1.36	1.87	0.00	1.00
+T0_Tired	T0 PHQ15 Q14 - Feeling tired or having low energy - Yes	0.30	0.10	0.50	1.34	1.10	1.64	0.00	0.00
+T0_Sleeping	constant	0.50	0.37	0.63	1.65	1.45	1.87	0.00	1.00
+T0_Sleeping	T0 PHQ15 Q15 - Trouble sleeping - Yes	0.36	0.17	0.56	1.44	1.19	1.75	0.00	0.00
+T0_Lackofcoordination	constant	0.44	0.32	0.56	1.55	1.37	1.74	0.00	1.00
+T0_Lackofcoordination	T0 Neurological Symptom 1 - Lack of co-ordination or balance - Yes	0.59	0.39	0.79	1.81	1.48	2.21	0.00	0.00
+T0_MemorConcentration	constant	0.52	0.40	0.65	1.69	1.49	1.91	0.00	1.00
+T0_MemorConcentration	T0 Neurological Symptom 2 - Problems with your memory or concentration - Yes	0.35	0.15	0.55	1.42	1.16	1.73	0.00	0.00
+T0_LossofSensation	constant	0.39	0.26	0.53	1.48	1.30	1.69	0.00	1.00
+T0_LossofSensation	"T0 Neurological Symptom 3 - Loss of sensation, numbness or tingling - Yes"	0.55	0.35	0.74	1.73	1.43	2.10	0.00	0.00
+T0_LossofVision	constant	0.67	0.57	0.77	1.95	1.76	2.16	0.00	1.00
+T0_LossofVision	T0 Neurological Symptom 4 - Partial or total loss of vision - Yes	-0.06	-0.37	0.24	0.94	0.69	1.27	0.69	0.69
+T0_LossofHearing	constant	0.64	0.53	0.74	1.89	1.71	2.09	0.00	1.00
+T0_LossofHearing	T0 Neurological Symptom 5 - Partial or total loss of hearing - Yes	0.21	-0.09	0.51	1.23	0.91	1.67	0.17	0.16
+T0_Paralysisorweakness	constant	0.45	0.34	0.57	1.57	1.40	1.77	0.00	1.00
+T0_Paralysisorweakness	T0 Neurological Symptom 6 - Paralysis or weakness of an arm or leg - Yes	0.61	0.40	0.81	1.83	1.49	2.26	0.00	0.00
+T0_DoubleorBlurredVision	constant	0.62	0.51	0.73	1.86	1.67	2.08	0.00	1.00
+T0_DoubleorBlurredVision	T0 Neurological Symptom 7 - Double or blurred vision - Yes	0.16	-0.07	0.40	1.18	0.93	1.49	0.16	0.16
+T0_DifficultySwallowing	constant	0.62	0.52	0.72	1.85	1.68	2.05	0.00	1.00
+T0_DifficultySwallowing	T0 Neurological Symptom 8 - Difficulty swallowing or a lump in the throat - Yes	0.44	0.10	0.78	1.55	1.11	2.18	0.01	0.01
+T0_DifficultySpeaking	constant	0.63	0.52	0.73	1.87	1.69	2.08	0.00	1.00
+T0_DifficultySpeaking	T0 Neurological Symptom 9 - Difficulty speaking or slurred speech - Yes	0.23	-0.05	0.51	1.26	0.95	1.67	0.11	0.11
+T0_SeizureorFit	constant	0.67	0.57	0.77	1.95	1.76	2.16	0.00	1.00
+T0_SeizureorFit	T0 Neurological Symptom 10 - A seizure or fit - Yes	-0.07	-0.39	0.25	0.93	0.68	1.28	0.66	0.66
+T0_AnxietyattackorPanicAttack	constant	0.64	0.54	0.74	1.89	1.71	2.10	0.00	1.00
+T0_AnxietyattackorPanicAttack	T0 Neurological Symptom 11/PRIME MD Q1 - An anxiety attack (suddenly feeling fear or panic) - Yes	0.19	-0.12	0.49	1.20	0.89	1.63	0.23	0.23
+T0_Littleinterestorpleasure	constant	0.57	0.45	0.68	1.76	1.57	1.97	0.00	1.00
+T0_Littleinterestorpleasure	T0 Neurological Symptom 12/PRIME MD Q2 - Little interest or pleasure in doing things - Yes	0.34	0.12	0.56	1.41	1.13	1.75	0.00	0.00
+T0_Feelingdownorhopeless	constant	0.53	0.42	0.65	1.71	1.52	1.91	0.00	1.00
+T0_Feelingdownorhopeless	"T0 Neurological Symptom 13/PRIME MD Q3 - Feeling down, depressed or hopeless - Yes"	0.40	0.19	0.61	1.50	1.21	1.85	0.00	0.00
+T0_Nervesorfeelinganxious	constant	0.61	0.49	0.73	1.85	1.64	2.08	0.00	1.00
+T0_Nervesorfeelinganxious	T0 Neurological Symptom 14/PRIME MD Q4 -'Nerves' or feeling anxious or on edge - Yes	0.12	-0.08	0.32	1.13	0.93	1.38	0.23	0.22
