@@ -1,16 +1,16 @@
 # oshipston/SNSS\_TF
 ## Prognosis in functional and pathophysiological neurological disorders: a shared basis.
 
-**Running head**
+**Running head**  
 Predicting prognosis in functional and pathophysiological neurological disorders.
 
-**Department**
+**Department**  
 Centre for Clinical Brain Sciences, University of Edinburgh, Edinburgh, United Kingdom
 
-**Authors**
+**Authors**  
 Oliver Shipston-Sharman1, Stoyan Popkirov2, Christian H Hansen3, Jon Stone1, Alan Carson1,4
 
-**Author Affiliations**
+**Author Affiliations**  
 1. Centre for Clinical Brain Sciences, University of Edinburgh, Edinburgh, United Kingdom.
 2. Department of Neurology, University Hospital Knappschaftskrankenhaus Bochum, Ruhr University Bochum, Bochum, Germany.
 3. Faculty of Epidemiology and Population Health, London School of Hygiene and Tropical Medicine, London, United Kingdom.
