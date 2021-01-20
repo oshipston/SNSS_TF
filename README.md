@@ -19,7 +19,7 @@
 **Conclusions:** Those with functional and pathophysiological neurological disorder share similar outcomes, clinical trajectories, and poor prognostic markers in multivariable models. Predicting outcome was not possible using the baseline data in this study.
 
 ## Introduction
-This repository contains all necessary functions and script files to run the analysis undertaken in the above manuscript. The directory excludes the raw data necessary to run the analyses due to patient confidentiality reasons but includes all the latest output tables and figures. The analysis pipeline is contained within SNSS\_Prognosis\_scripts.py. This lays out in a hopefully readable fashion the data pre-processing pipeline and analytical approach step-by-step. It imports SNSS\_Prognosis\_functions.py; which contains all the relevant functions required to run.
+This repository contains all necessary functions and script files to run the analysis undertaken in the above manuscript. The directory excludes the raw data necessary to run the analyses due to patient confidentiality reasons but includes all the latest output tables and figures. The analysis pipeline is contained within SNSS\_Prognosis\_scripts.py. This lays out in a hopefully readable fashion the data pre-processing pipeline and analytical approach step-by-step. It imports SNSS\_Prognosis\_functions.py; which contains all the relevant functions required to run. The functions were developed over a significant period by Oliver Shipston-Sharman only and contain some idiosyncracies which I would welcome improvements on should you find any.
 
 ## SNSS\_Prognosis\_scripts.py structure
 ### Data Pipeline 1. Import dataset from UofE SMB Datashare of local file
@@ -28,16 +28,41 @@ the remote UofE datastore. Gaining access to the original patient-level data is 
 the discretion of the research group and initial study ethics approval.
 ### Data Pipeline 2. Quantify those lost to follow up, add binary follow up variables
 Step 2 of the pipeline ensures index integrity and assesses attrition over the study period.
-A table summarising this is output to "output/0\_SNSS\_retention.tsv"
+A table summarising this is output in the process.
+Output:
+1. output/0_SNSS_retention.tsv
 ### Data Pipeline 3. Preprocess Raw Data
 Step 3 adds custom variables to the original dataframe. These include user selected binarisation
 of categorical variables or compound scores such as illness worry which is the sum of 3
 whitely index variables.  
-'''python
-IllnessWorry = 'Wworry' + 'Wseriousworry' + 'Wattention'
-'''
+```python
+IllnessWorry = Wworry + Wseriousworry + Wattention
+```
 ### Data Pipeline 4. Declare SNSS specific feature sets and dummy vars
+Step 4 is an administrative step of declaring variable groups and custom dictionaries
+for later use in the analysis.
 ### Analysis 0. Compare lost to follow up and follow up groups
+This section assesses baseline differences between functional and pathophysiological groups as well as those lost to follow up within this grouping.
+Output:
+1. output/0_OutcomeContinuousTable.tsv
+2. output/0_OutcomeContinuousStats.tsv
+3. output/0_OutcomeCategoricalTable.tsv
+4. output/0_OutcomeCategoricalStats.tsv
+5. output/0_MVPredictorsForestPlotT2_HCData.pdf
+6. output/0_MVAnalysis_NotExplainedT2_HCData.tsv
+7. output/0_MVAnalysis_ExplainedT2_HCData.tsv
+8. output/0_FollowUpContinuousTable.tsv
+9. output/0_FollowUpContinuousStats.tsv
+10. output/0_FollowUpCategoricalTable.tsv
+11. output/0_FollowUpCategoricalStats.tsv
+12. output/0_BaselineContinuousTable.tsv
+13. output/0_BaselineContinuousStats.tsv
+14. output/0_BaselineCategoricalTable.tsv
+15. output/0_BaselineCategoricalStats.tsv
+
+These are summarised in:
+1. Tables/Manuscript Table 1 - Baseline Explained Comparison.pdf
+
 ### Analysis 1. Compare outcomes between functional category
 ### Analysis 2. Assess secondary outcomes
 ### Analysis 3. Validate Scottish Index of Multiple Deprivation 2004 Interactions
@@ -49,6 +74,6 @@ IllnessWorry = 'Wworry' + 'Wseriousworry' + 'Wattention'
 ### Analysis 7. NN Assessment of SNSS Prognosis
 
 
-'''python
+```python
 
-'''
+```
