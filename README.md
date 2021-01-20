@@ -1,25 +1,21 @@
-# oshipston/SNSS\_TF
-## Prognosis in functional and pathophysiological neurological disorders: a shared basis.
+# Prognosis in functional and pathophysiological neurological disorders: a shared basis.
 
-**Running head**  
-Predicting prognosis in functional and pathophysiological neurological disorders.
+**Running head**: Predicting prognosis in functional and pathophysiological neurological disorders.
 
-**Department**  
-Centre for Clinical Brain Sciences, University of Edinburgh, Edinburgh, United Kingdom
+**Department**: Centre for Clinical Brain Sciences, University of Edinburgh, Edinburgh, United Kingdom
 
-**Authors**  
-Oliver Shipston-Sharman1, Stoyan Popkirov2, Christian H Hansen3, Jon Stone1, Alan Carson1,4
+**Authors**: Oliver Shipston-Sharman1, Stoyan Popkirov2, Christian H Hansen3, Jon Stone1, Alan Carson1,4
 
-**Author Affiliations**  
+**Author Affiliations**
 1. Centre for Clinical Brain Sciences, University of Edinburgh, Edinburgh, United Kingdom.
 2. Department of Neurology, University Hospital Knappschaftskrankenhaus Bochum, Ruhr University Bochum, Bochum, Germany.
 3. Faculty of Epidemiology and Population Health, London School of Hygiene and Tropical Medicine, London, United Kingdom.
 4. Scottish Neurobehavioural Rehabilitation Unit, Royal Edinburgh Hospital, Edinburgh, United Kingdom.
 
 ## Abstract
-**Objective:** To compare self-reported outcomes, clinical trajectory and utility of baseline questionnaire responses in predicting prognosis in functional and pathophysiological neurological symptoms.
-**Methods:** Data on 2581 patients from the Scottish Neurological Symptoms Study (SNSS) were used. Baseline data included health-related quality of life, anxiety and depressive symptoms, illness perceptions, consultation satisfaction, physical symptoms and demographics.The prospective cohort included neurology outpatients classified with a functional (reporting symptoms &#39;not at all&#39; or &#39;somewhat explained&#39; by &#39;organic disease&#39;; n = 716) or recognised pathophysiological disorder (&#39;largely&#39; or &#39;completely explained&#39;; n = 1865). Univariate and multivariable logistic regression and deep neural network (DNN) models were used to assess the capacity of self-reported markers at baseline to predict self-reported global clinical improvement (CGI) at 12-months.
-**Results:** Patients with functional and pathophysiological disorders report near identical outcomes at 12-months with 67% and 66% respectively reporting unchanged or worse CGI. In multivariable modelling &#39;negative expectation of recovery&#39; and &#39;disagreement with psychological attribution&#39; predicting same or worse outcome in both groups. Receipt of disability-related state benefit showed a complex relationship with outcome in the functional disorder group (OR = 2.28 (95%-CI: 1.36-3.84) for same or worse CGI in a group-stratified model) and was not related to a measure of economic deprivation. DNN models trained on all 92 baseline questionnaire items predicted poor outcome with area under the receiver-operator curve (AUROC) of only 0.67 in both groups.
+**Objective:** To compare self-reported outcomes, clinical trajectory and utility of baseline questionnaire responses in predicting prognosis in functional and pathophysiological neurological symptoms.  
+**Methods:** Data on 2581 patients from the Scottish Neurological Symptoms Study (SNSS) were used. Baseline data included health-related quality of life, anxiety and depressive symptoms, illness perceptions, consultation satisfaction, physical symptoms and demographics.The prospective cohort included neurology outpatients classified with a functional (reporting symptoms &#39;not at all&#39; or &#39;somewhat explained&#39; by &#39;organic disease&#39;; n = 716) or recognised pathophysiological disorder (&#39;largely&#39; or &#39;completely explained&#39;; n = 1865). Univariate and multivariable logistic regression and deep neural network (DNN) models were used to assess the capacity of self-reported markers at baseline to predict self-reported global clinical improvement (CGI) at 12-months.  
+**Results:** Patients with functional and pathophysiological disorders report near identical outcomes at 12-months with 67% and 66% respectively reporting unchanged or worse CGI. In multivariable modelling &#39;negative expectation of recovery&#39; and &#39;disagreement with psychological attribution&#39; predicting same or worse outcome in both groups. Receipt of disability-related state benefit showed a complex relationship with outcome in the functional disorder group (OR = 2.28 (95%-CI: 1.36-3.84) for same or worse CGI in a group-stratified model) and was not related to a measure of economic deprivation. DNN models trained on all 92 baseline questionnaire items predicted poor outcome with area under the receiver-operator curve (AUROC) of only 0.67 in both groups.  
 **Conclusions:** Those with functional and pathophysiological neurological disorder share similar outcomes, clinical trajectories, and poor prognostic markers in multivariable models. Predicting outcome was not possible using the baseline data in this study.
 
 ## Introduction
@@ -34,6 +30,12 @@ the discretion of the research group and initial study ethics approval.
 Step 2 of the pipeline ensures index integrity and assesses attrition over the study period.
 A table summarising this is output to "output/0\_SNSS\_retention.tsv"
 ### Data Pipeline 3. Preprocess Raw Data
+Step 3 adds custom variables to the original dataframe. These include user selected binarisation
+of categorical variables or compound scores such as illness worry which is the sum of 3
+whitely index variables.  
+'''python
+IllnessWorry = 'Wworry' + 'Wseriousworry' + 'Wattention'
+'''
 ### Data Pipeline 4. Declare SNSS specific feature sets and dummy vars
 ### Analysis 0. Compare lost to follow up and follow up groups
 ### Analysis 1. Compare outcomes between functional category
