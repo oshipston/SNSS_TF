@@ -33,12 +33,17 @@ Oliver Shipston-Sharman1, Stoyan Popkirov2, Christian H Hansen3, Jon Stone1, Ala
 
 ## Introduction
 
-This repository contains all necessary functions and script files to run the analysis undertaken in the above manuscript. The directory excludes the raw data necessary to run the analyses due to patient confidentiality reasons but includes all the latest output tables and figures. The analysis pipeline is contained within &#39;SNSS\_Prognosis\_scripts.py&#39;. This lays out in a hopefully readable fashion the data pre-processing pipeline and analytical approach step-by-step. It imports &#39;SNSS\_Prognosis\_functions.py&#39; which contains all the relevant functions required to run.
+This repository contains all necessary functions and script files to run the analysis undertaken in the above manuscript. The directory excludes the raw data necessary to run the analyses due to patient confidentiality reasons but includes all the latest output tables and figures. The analysis pipeline is contained within SNSS\_Prognosis\_scripts.py. This lays out in a hopefully readable fashion the data pre-processing pipeline and analytical approach step-by-step. It imports SNSS\_Prognosis\_functions.py; which contains all the relevant functions required to run.
 
 ## SNSS\_Prognosis\_scripts.py structure
 ### Data Pipeline 1. Import dataset from UofE SMB Datashare of local file
+Step 1 of the data pipeline imports the original SAS7BDAT file in a pandas dataframe from
+the remote UofE datastore. Gaining access to the original patient-level data is at
+the discretion of the research group and initial study ethics approval.
 ### Data Pipeline 2. Quantify those lost to follow up, add binary follow up variables
-### Data Pipeline 3. Preprocess raw data
+Step 2 of the pipeline ensures index integrity and assesses attrition over the study period.
+A table summarising this is output to "output/0\_SNSS\_retention.tsv"
+### Data Pipeline 3. Preprocess Raw Data
 ### Data Pipeline 4. Declare SNSS specific feature sets and dummy vars
 ### Analysis 0. Compare lost to follow up and follow up groups
 ### Analysis 1. Compare outcomes between functional category
@@ -50,3 +55,7 @@ This repository contains all necessary functions and script files to run the ana
 ### Addendum to Analysis 5: Combined analysis with diagnosis as predictor
 ### Analysis 6 Reduce data set with UV regression coefficients/p-vals
 ### Analysis 7. NN Assessment of SNSS Prognosis
+
+
+'''python
+'''
