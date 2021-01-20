@@ -2,6 +2,7 @@
 gitignore/
 raw_data/
 .DS_Store
+.gitignore
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
