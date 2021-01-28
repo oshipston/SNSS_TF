@@ -1,31 +1,25 @@
 #!/usr/bin/env python3.6
 """ This is a drafting script for SNSS_TF"""
 import os
+# Ensure CWD is correct..
 os.chdir("/Users/oss/documents/code/SNSS_TF")
+# Import study functions
 import SNSS_Prognosis_functions as oss
-import importlib as imp
-import numpy as np
-import matplotlib.pyplot as plt, mpld3
-import pandas as pd
-import csv
-import scipy
-from statsmodels.discrete.discrete_model import Logit
-import scipy.stats as stats
-from sklearn.metrics import confusion_matrix, \
-    accuracy_score, roc_auc_score, roc_curve, \
-    classification_report, precision_score, recall_score, explained_variance_score, r2_score, f1_score
+
 # //////////////////////////////////////////////////////////////////////////////
 """Config"""
 # //////////////////////////////////////////////////////////////////////////////
-imp.reload(oss)
+# Initialisation script and config loading
 oss.moduleInit()
 cfg = oss.loadJSON("config.json")
+# Variable meta data is stored in a JSON file in the raw_data directory
 varGroups = cfg['varGroups']
 featMetaData = oss.loadJSON("raw_data/SNSS_vars.json")
 
 """ Data Pipeline 1. Import dataset from UofE SMB Datashare of local file """
 raw = oss.import_SNSS(usr=input("User: "), pwd=input("Password: "), local_file=1)
-
+# # If provided with a URL to University of Edinburgh datasahre your UofE credentials
+# can be provided here for off-device secure storage of data.
 # //////////////////////////////////////////////////////////////////////////////
 """ Data Pipeline 2. Quantify those lost to follow up, add binary follow up variables"""
 # //////////////////////////////////////////////////////////////////////////////
@@ -42,14 +36,14 @@ SNSSDf = oss.SNSSCompoundVariables(SNSSDf)
 """ Data Pipeline 4. Declare SNSS specific feature sets and dummy vars"""
 # //////////////////////////////////////////////////////////////////////////////
 # Declare relevant feature set lists
-wholeSet = varGroups['T0_Demographics'] + varGroups['T0_Socioeconomic'] + \
-    varGroups['T0_HADS'] + varGroups['T0_SF12'] + varGroups['T0_IPQ'] + \
-    varGroups['T0_Whiteley'] + varGroups['T0_Cause'] + varGroups['T0_Satisfaction'] + \
-    varGroups['T0_PHQSymptoms'] + varGroups['T0_NeuroSymptoms']
+wholeSet = (varGroups['T0_Demographics'] + varGroups['T0_Socioeconomic'] +
+    varGroups['T0_HADS'] + varGroups['T0_SF12'] + varGroups['T0_IPQ'] +
+    varGroups['T0_Whiteley'] + varGroups['T0_Cause'] + varGroups['T0_Satisfaction'] +
+    varGroups['T0_PHQSymptoms'] + varGroups['T0_NeuroSymptoms'])
 
-T1_wholeSet = varGroups['T1_HADS'] + varGroups['T1_SF12'] + varGroups['T1_IPQ'] + \
-    varGroups['T1_Whiteley'] + varGroups['T1_Satisfaction'] + \
-    varGroups['T1_PHQSymptoms'] + varGroups['T1_NeuroSymptoms']
+T1_wholeSet = (varGroups['T1_HADS'] + varGroups['T1_SF12'] + varGroups['T1_IPQ'] +
+    varGroups['T1_Whiteley'] + varGroups['T1_Satisfaction'] +
+    varGroups['T1_PHQSymptoms'] + varGroups['T1_NeuroSymptoms'])
 
 T1_outcomes = varGroups['T1_Outcomes']
 
@@ -59,6 +53,7 @@ sharpe2010Set = ['AgeBins', 'Gender', 'Diagnosis', 'T0_PHQ13_Binned',
                  'T0_IncapacityBenefitorDLA',
                  'T0_SIMD04_bin']
 
+# Var groups below using pre-computed UV LR identified variables
 notExplainedReduced = varGroups['T0_0.001NotExplainedReduced']
 explainedReduced = varGroups['T0_0.001ExplainedReduced']
 
@@ -92,7 +87,6 @@ dummyExceptionDict = {'T0_SF12_PF': 100.0,
 """Analysis 0. Compare lost to follow up and follow up groups"""
 # //////////////////////////////////////////////////////////////////////////////
 # Do functional and structural/lost to follow up and followed up groups differ?
-imp.reload(oss)
 oss.FollowUpandBaselineComparison(SNSSDf)
 
 # Which of these predict loss to follow up in a multivariate model??
@@ -150,7 +144,7 @@ oss.secondaryOutcomePlot(outcome, groupVar, SNSSDf, featMetaData, style='line')
 """Analysis 3. Validate Scottish Index of Multiple Deprivation 2004 Interactions"""
 # //////////////////////////////////////////////////////////////////////////////
 # Given differences in receipt of benefit does living in a deprived area
-# explain the observed effect?
+# explain the observed effect? Warning: this takes some time to plot..
 _ = oss.SNSSSocioeconomicAssessment(SNSSDf)
 
 # //////////////////////////////////////////////////////////////////////////////
@@ -160,9 +154,10 @@ _ = oss.SNSSSocioeconomicAssessment(SNSSDf)
 featureSet = sharpe2010Set
 outcome = 'T2_poorCGI'
 groupVar = 'ExpGroups'  # State which variable to group by.
-multiGroupException = {1: 1.0,   # State which dummy values to drop for each group value
+# State which dummy values to drop for each group value i.e. if group == 1 (functional)
+# then use 1.0 (Not at all explained) as the dummy variable.
+multiGroupException = {1: 1.0,
                        2: 3.0}
-imp.reload(oss)
 byGroupMdlT, byGroupMdls, byGroupMSI = oss.multiGroupLogisticRegression(df=SNSSDf, featureSet=featureSet,
                                                             outcomeVar=outcome, featMetaData=featMetaData,
                                                             featDataTypeDict=sharpe2010SetTypeDict,
@@ -175,6 +170,7 @@ byGroupMdlT['Not Explained'].to_csv('output/4_UVAnalysis_NotExplained'+outcome+'
 byGroupMdlT['Explained'].to_csv('output/4_UVAnalysis_Explained'+outcome+'.tsv', sep='\t')
 oss.logitCoeffForestPlot(byGroupMdlT, mdl=[], tag=['4', 'UV', outcome],
                          groupVar=groupVar, returnPlot=False)
+
 """Addendum to Analysis 4: Combined analysis with diagnosis as predictor"""
 sharpe2010SetAdapted = ['AgeBinInt', 'Gender_bin', 'ExpGroups_bin', 'T0_PHQNeuro28_BinInt',
                         'T0_SF12_PF_BinInt', 'T0_HADS_BinInt', 'T0_NegExpectation',
@@ -241,28 +237,23 @@ byGroupMdlT['Not Explained'].to_csv('output/5_MVAnalysis_NotExplained'+outcomeVa
 byGroupMdlT['Explained'].to_csv('output/5_MVAnalysis_Explained'+outcomeVar+'.tsv', sep='\t')
 oss.logitCoeffForestPlot(byGroupMdlT, mdl=[], tag=['5', 'MV', outcomeVar],
                          groupVar=groupVar, returnPlot=False)
-
-byGroupMSI['Explained']
 """Addendum to Analysis 5: Combined analysis with diagnosis as predictor"""
-imp.reload(oss)
-
 outcomeVar = 'T2_poorCGI'
 featureSet = sharpe2010SetAdapted
-# _dummyExceptionDict = dummyExceptionDict
-# _dummyExceptionDict['Diagnosis'] = 2.0
-MVdf = SNSSDf
-mdlExportT, mdl, msi = oss.MVLogisticRegression_v2(df=MVdf,
-                                                 featureSet=featureSet,
-                                                 outcomeVar=outcomeVar,
-                                                 featMetaData=featMetaData,
-                                                 featDataTypeDict=sharpe2010SetAdaptedTypeDict,
-                                                 dummyExceptionDict=dummyExceptionDict)
+mdlExportT, mdl, msi = oss.MVLogisticRegression_v2(df=SNSSDf,
+                                                   featureSet=featureSet,
+                                                   outcomeVar=outcomeVar,
+                                                   featMetaData=featMetaData,
+                                                   featDataTypeDict=sharpe2010SetAdaptedTypeDict,
+                                                   dummyExceptionDict=dummyExceptionDict)
 # Results Export...
 mdlExportT.to_csv('output/5adapted_MVAnalysis_All'+outcomeVar+'.tsv', sep='\t')
 oss.logitCoeffForestPlot({'All': mdlExportT}, mdl=[], tag=['5adapted', 'MV', outcomeVar],
                          groupVar='All', returnPlot=False)
-                         msi
-"""Analysis 6a. Reduce data set with UV regression coefficients/p-vals"""
+
+# //////////////////////////////////////////////////////////////////////////////
+"""Analysis 6 Reduce data set with UV regression coefficients/p-vals"""
+# //////////////////////////////////////////////////////////////////////////////
 # Feature Selection with UV Regression
 featureSet = wholeSet
 outcome = 'T2_poorCGI'
@@ -278,42 +269,40 @@ multiGroupException = {1: 1.0,   # State which dummy values to drop for each gro
 #                                                             featDataTypeDict=sharpe2010SetTypeDict
 #                                                             multiGroupException=multiGroupException,
 #                                                             MV=0)
-byGroupMdlT['Not Explained'].to_csv('output/6a_WholeSet_UVAnalysis_NotExplained'+outcome+'.tsv', sep='\t')
-byGroupMdlT['Explained'].to_csv('output/6a_WholeSet_UVAnalysis_Explained'+outcome+'.tsv', sep='\t')
-oss.logitCoeffForestPlot(byGroupMdlT, mdl=[], tag=['6a', 'UV', outcome],
-                         groupVar=groupVar, returnPlot=False)
+# byGroupMdlT['Not Explained'].to_csv('output/6a_WholeSet_UVAnalysis_NotExplained'+outcome+'.tsv', sep='\t')
+# byGroupMdlT['Explained'].to_csv('output/6a_WholeSet_UVAnalysis_Explained'+outcome+'.tsv', sep='\t')
+# oss.logitCoeffForestPlot(byGroupMdlT, mdl=[], tag=['6a', 'UV', outcome],
+#                          groupVar=groupVar, returnPlot=False)
 
-alpha = 0.001
-groupVar = 'ExpGroups'
-outcome = 'T2_poorCGI'
-reducedfeatures = {}
-reducedMVTables = {}
-reducedMVModels = {}
-groupVarDict = dict(zip(featMetaData[groupVar]['valuelabels'],
-                        featMetaData[groupVar]['values']))
-for G in ['Not Explained', 'Explained']:
-    reducedfeatures[G] = []
-    for P in set(byGroupMdlT[G].index.get_level_values(0)):
-        if byGroupMdlT[G].loc[P].llrp[1] < alpha:
-            reducedfeatures[G].append(P)
-    print(str(len(reducedfeatures[G])) + ' Variables with llrp < ' + str(alpha) + ' for ' + G + ' group.')
-    # Compute logistic regression with reduced dataset..
-    reducedMVTables[G], reducedMVModels[G], _ =\
-        oss.MVLogisticRegression(df=SNSSDf[SNSSDf[groupVar] == groupVarDict[G]],
-                                 featureSet=reducedfeatures[G], outcomeVar=outcome,
-                                 featMetaData=featMetaData, dummyExceptionDict=dummyExceptionDict)
-    oss.logitCoeffForestPlot(predictorTables={'All': reducedMVTables[G]}, mdl=[],
-                             tag=['6a_Reduced_' + G, 'MV', outcome],
-                             groupVar='All', returnPlot=False)
+# alpha = 0.001
+# groupVar = 'ExpGroups'
+# outcome = 'T2_poorCGI'
+# reducedfeatures = {}
+# reducedMVTables = {}
+# reducedMVModels = {}
+# groupVarDict = dict(zip(featMetaData[groupVar]['valuelabels'],
+#                         featMetaData[groupVar]['values']))
+# for G in ['Not Explained', 'Explained']:
+#     reducedfeatures[G] = []
+#     for P in set(byGroupMdlT[G].index.get_level_values(0)):
+#         if byGroupMdlT[G].loc[P].llrp[1] < alpha:
+#             reducedfeatures[G].append(P)
+#     print(str(len(reducedfeatures[G])) + ' Variables with llrp < ' + str(alpha) + ' for ' + G + ' group.')
+#     # Compute logistic regression with reduced dataset..
+#     reducedMVTables[G], reducedMVModels[G], _ =\
+#         oss.MVLogisticRegression(df=SNSSDf[SNSSDf[groupVar] == groupVarDict[G]],
+#                                  featureSet=reducedfeatures[G], outcomeVar=outcome,
+#                                  featMetaData=featMetaData, dummyExceptionDict=dummyExceptionDict)
+#     oss.logitCoeffForestPlot(predictorTables={'All': reducedMVTables[G]}, mdl=[],
+#                              tag=['6a_Reduced_' + G, 'MV', outcome],
+#                              groupVar='All', returnPlot=False)
 
-reducedfeatures['Not Explained']
 # //////////////////////////////////////////////////////////////////////////////
 """Analysis 7. NN Assessment of SNSS Prognosis"""
 # //////////////////////////////////////////////////////////////////////////////
-imp.reload(oss)
 # Declare the groups/datasets of interest...
 F_OIdx = (SNSSDf['ExpGroups'] == 1)
-S_OIdx = (SNSSDf['ExpGroups'] == 2) # SNSSD f[F_OIdx], SNSSDf[S_OIdx],
+S_OIdx = (SNSSDf['ExpGroups'] == 2)
 
 # Declare the hyperparameter space...
 hpDict = {'nHiddenLayerArray': {'value': [1, 3, 5], 'order': 0},
@@ -323,8 +312,6 @@ hpDict = {'nHiddenLayerArray': {'value': [1, 3, 5], 'order': 0},
           'nEpochArray': {'value': [7000], 'order': 4}}
 # Experiment 1: Functional with whole set
 # Declare the problem parameters for each experiment.
-imp.reload(oss)
-
 problemDict = {'featureSet': {'value': wholeSet, 'label': 'wholeSet'},
                'outcome': {'value': 'T2_poorCGI' , 'label': 'T2_poorCGI'},
                'df': {'value': SNSSDf[F_OIdx], 'label': 'Functional'}}

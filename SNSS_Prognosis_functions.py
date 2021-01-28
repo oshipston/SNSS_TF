@@ -1,6 +1,5 @@
 #!/usr/bin/env python3.6
 """This module describes functions for analysis of the SNSS Dataset"""
-
 import os
 import pandas as pd
 from sas7bdat import SAS7BDAT
@@ -55,8 +54,22 @@ __credits__ = ["Oliver Shipston-Sharman", "Christian Hansen", "Alan Carson", "Jo
 __license__ = "Apache-2.0"
 __version__ = "0.1.0"
 __maintainer__ = "Oliver Shipston-Sharman"
-__email__ = "s1302553@ed.ac.uk"
+__email__ = "oliver.shipston-sharman@nhs.net"
 
+
+""" Short title
+
+Description
+
+Args:
+    arg1: arg1 Description
+
+Returns:
+    output1: output1 description.
+
+Raises:
+    excpeption1: excpetion circumstances.
+"""
 
 def loadJSON(fname):
     # Load configuration
@@ -65,12 +78,10 @@ def loadJSON(fname):
     f.close()  # Close config file...
     return cfg
 
-
 def moduleInit():
     pd.options.display.max_columns = None
     pd.options.display.max_rows = 20
     tfCompat.v1.disable_eager_execution()
-
 
 def rmws(strList):
     stripList = []
@@ -78,21 +89,17 @@ def rmws(strList):
         stripList.append(s.replace(" ", ""))
     return stripList
 
-
 def timeAppend(varList, T):
     timeVarList = []
     for v in varList:
         timeVarList.append(T + '_' + v)
     return timeVarList
 
-
 def autoscale(x):
     return (x-np.min(x))/np.max(x)
 
-
 def normalise(x):
     return (x-np.mean(x))/np.std(x)
-
 
 def import_SNSS(usr, pwd, local_file=0):
     """ Mount UoE CMVM smb and import SNSS as dataframe.
@@ -137,6 +144,22 @@ def import_SNSS(usr, pwd, local_file=0):
 
 
 def SNSSNullity(raw):
+    """ Assess nullity of raw data import
+
+    Takes the raw imported dataset, ensures index integrity, assigns new binary
+    variables for follow up at each study timepoint and computes attrittion numbers
+    and ratios for each.
+
+    Args:
+        raw: Pandas DataFrame object from SAS7BDAT file.
+
+    Returns:
+        raw: The validated raw dataframe.
+        retentionTable: A pandas dataframe of counts for use in scripts if required.
+
+    Raises:
+        NONE
+        """
     # Assign nPatid as index variable.
     raw = raw.set_index('nPatid', verify_integrity=True)
     # Convert diagnostic nullity into binary variable in dataframe.
@@ -166,7 +189,21 @@ def SNSSNullity(raw):
 
 
 def SNSSCompoundVariables(df):
-    """Produce variable compund measures e.g. SF12, HADS etc. """
+    """Produce variable compund measures e.g. SF12, HADS etc.
+
+    Adds the specified custom variables normally products or sums of other Variables
+    or binarisation etc to the provided dataframe. This function also undertakes
+    SIMD quintile mapping to patient postcodes.
+
+    Args:
+        df: Pandas dataframe.
+
+    Returns:
+        df: The dataframe with new variables added..
+
+    Raises:
+        KeyError, ValueError: If errors in postcode mapping.
+    """
     # Deactivate assignment warning which slows down SIMD processing.
     pd.options.mode.chained_assignment = None
 
@@ -314,7 +351,6 @@ def SNSSCompoundVariables(df):
     SIMD04 = pd.read_csv('raw_data/SIMDData/postcode_2006_2_simd2004.csv', index_col=0)
     nullIdx = SIMD04['simd2004rank'].str.contains(' ')
     domains = ['inc', 'emp', 'hlth', 'educ', 'access', 'house']
-
     for d in domains:
         SIMD04['simd2004_' + d + '_quintile'] = 5-pd.qcut(SIMD04['simd2004_' + d + '_rank']
                                                           [~nullIdx].astype(float), 5,
@@ -335,7 +371,7 @@ def SNSSCompoundVariables(df):
                                 'simd2004_educ_quintile',
                                 'simd2004_access_quintile',
                                 'simd2004_house_quintile']].values))
-
+    # Initialising variables as NaN arrays
     df['T0_SIMD04'] = np.nan
     df['T0_SIMD04_score'] = np.nan
     for d in domains:
@@ -346,8 +382,6 @@ def SNSSCompoundVariables(df):
     print('Iterating through postcodes')
     i = 0
     for p in df['Postcode']:
-        if (i % 500) == 0:
-            print('Checking Postcode: ' + str(i))
         if (p == '') | pd.isnull(p):
             df['Postcode'].iloc[i] = np.nan
             df['T0_SIMD04'].iloc[i] = np.nan
@@ -406,7 +440,6 @@ def cohen_d(x, y):
     stats['mean'] = [meanx, meany]
     stats['std'] = [stdx, stdy]
     stats['sem'] = [semx, semy]
-
     return d, stats
 
 
@@ -420,7 +453,24 @@ def cramersV(nrows, ncols, chisquared, correct_bias=True):
     return V, phi
 
 
-def partitionData(df, partitionRatio):
+def partitionData(df, partitionRatio=0.7):
+    """ Partition data into training and evaluation sets
+
+    Takes a dataframe and returns two arrays with the proportion to use for
+    training declared as the partition ratio and the other as evaluation of
+    (1-partitionRatio) size.
+
+    Args:
+        df: Pandas DataFrame to be partitioned.
+        partitionRatio: Ratio of the data to be used for training.
+
+    Returns:
+        trainIdx: The indices of data asssigned to training set.
+        evalIdx: The indices of data asssigned to eval set.
+
+    Raises:
+        NONE
+    """
     randIdx = np.linspace(0, df.shape[0]-1, df.shape[0]).astype(int)
     np.random.shuffle(randIdx)
     trainIdx = randIdx[0:round(df.shape[0]*partitionRatio)]
@@ -429,6 +479,20 @@ def partitionData(df, partitionRatio):
 
 
 def FollowUpandBaselineComparison(df):
+    """ A group-wise and follow-up wise comparison of declared Vars
+
+    Takes a pandas dataframe and as per the declared variables of interest below,
+    compares between groups and between lost to follow up and retained.
+
+    Args:
+        df: Pandas DataFrame to be assessed.
+
+    Returns:
+        NONE: All relevant tables are exported to CSV in the function.
+
+    Raises:
+        NONE
+    """
     def sigTest(G, varList, vType, df):
         sigDict = {}
         if vType == 'cat':
@@ -522,11 +586,18 @@ def FollowUpandBaselineComparison(df):
 
 def SNSSPrimaryOutcomeMeasures(df):
     """ Compare IPS and CGI outcomes between functional groups.
-    Keyword arguments:
-    df = SNSS_Dataframe with T0 NAs removed
 
-    This function compares CGI and IPS both in raw and pooled form between functional groups.
-    Outputs tables of counts and proportions of reported outcomes.
+    This function compares CGI and IPS both in raw and pooled form between
+    functional groups. Outputs tables of counts and proportions of reported outcomes.
+
+    Args:
+        df: Pandas DataFrame to be assessed.
+
+    Returns:
+        NONE: All relevant tables are exported to CSV in the function.
+
+    Raises:
+        NONE
     """
     outcomes = [['T2_HealthChange', 'T2_SymptomsChange'], ['T2_poorCGI', 'T2_poorIPS']]
     outcomeTag = ['', 'Pool']
@@ -565,11 +636,45 @@ def SNSSPrimaryOutcomeMeasures(df):
 
 
 def multi_text(ax, x, y, s, txt_params={}):
+    """ Matplotlib multi-line text plotting
+
+    Takes a matplotlib axes, set of strings and positions and plots.
+
+    Args:
+        ax: Matplotlib axes.
+        x: Array of x values
+        y: constant y value
+        s: Array of strings.
+        txt_params: Dict of text params.
+
+    Returns:
+        NONE: Text is plotted onto provided axes.
+
+    Raises:
+        NONE
+    """
     for i in range(len(s)):
         ax.text(x[i], y, s[i], **txt_params)
 
 
 def stackedBarPlot(x_var, y_vars, df, featMetaData):
+    """ Plots stacked bar charts as per declared variables.
+
+    Takes a matplotlib axes, set of strings and positions and plots a stacked bar
+    chart with the X variables being subdivided by the Y variables.
+
+    Args:
+        x_var: Names of variables on X_axis
+        y_vars: Names of variables with which to subdivide X variables.
+        df: Pandas dataframe to be used.
+        featMetaData: Variable meta data provided in JSON file.
+
+    Returns:
+        NONE: Figure is saved in function.
+
+    Raises:
+        NONE
+    """
     if not isinstance(y_vars, list):
         y_vars = [y_vars]
     fig_params={'num': 1,
@@ -629,6 +734,24 @@ def stackedBarPlot(x_var, y_vars, df, featMetaData):
 
 
 def subCatBarPlot(x_vars, x_sub_var, df, featMetaData):
+    """ Plots stacked bar charts as per declared variables.
+
+    Takes a matplotlib axes, set of strings and positions and plots a bar
+    chart with the X variables being subdivided by the X_sub variables and the
+    subdivisions being plotted side by side.
+
+    Args:
+        x_vars: Names of variables on X_axis
+        x_sub_var: Names of variables with which to subdivide X variables.
+        df: Pandas dataframe to be used.
+        featMetaData: Variable meta data provided in JSON file.
+
+    Returns:
+        NONE: Figure is saved in function.
+
+    Raises:
+        NONE
+    """
     if  not isinstance(x_vars, list):
         x_vars = [x_vars]
         print('is not list')
@@ -691,6 +814,23 @@ def subCatBarPlot(x_vars, x_sub_var, df, featMetaData):
 
 
 def primaryOutcomePlot(outcome, group_var, data, featMetaData, style='subCat'):
+    """ Plots bar charts of declared outcome and grouping var.
+
+    Takes declared variables and plots bar chart accordingly.
+
+    Args:
+        outcome: name of outcome variable
+        group_var: Names grouping variable i.e. X variables to be used
+        data: Pandas dataframe to be used.
+        featMetaData: Variable meta data provided in JSON file.
+        style: Defaults to side-by-side vs stacked plotting.
+
+    Returns:
+        NONE: Figure is saved in respective function.
+
+    Raises:
+        NONE
+    """
     if style == 'subCat':
         subCatBarPlot(outcome, group_var, data, featMetaData)
     elif style == 'stacked':
@@ -698,6 +838,21 @@ def primaryOutcomePlot(outcome, group_var, data, featMetaData, style='subCat'):
 
 
 def SNSSSecondaryOutcomeMeasures(df):
+    """ Plots line chart and produced table of secondary SNSS outcomes
+
+    Takes pandas dataframe and assesses between group differences over time
+    of secindary outcome measures including depressino scales and physical/mental
+    functioning.
+
+    Args:
+        df: Pandas dataframe
+
+    Returns:
+        outcomeT: Table of outcome measures grouped by functional diagnosis.
+
+    Raises:
+        NONE
+    """
     groupVar = 'ExpGroups'
     SNSSVars = loadJSON('raw_data/SNSS_vars.json')
     rowDict = dict(zip(SNSSVars[groupVar]['values'],
@@ -729,7 +884,6 @@ def SNSSSecondaryOutcomeMeasures(df):
     outcomeT.rename(index=rowDict).transpose().\
         to_csv('output/2_SecondaryOutcomeMeasures.tsv', sep='\t')
     return outcomeT
-
 
 def plot_ci(ax, x, y, color, style='t'):
     if style == 't':
@@ -794,7 +948,20 @@ def secondaryOutcomePlot(outcome, groupVar, df, featMetaData, style='line'):
 
 
 def SNSSSocioeconomicAssessment(df):
-    """Produces catplot of SIMD04 Quintiles and various measures taken during SNSS"""
+    """ Multiple plots comparing SIMD quintile to functional diagnosis and outcome
+
+    Takes pandas dataframe and plots SIMD quintiles as per each functional Diagnosis
+    and primary and secondary outcomes.
+
+    Args:
+        df: Pandas dataframe
+
+    Returns:
+        NONE: All plots saved within function.
+
+    Raises:
+        NONE
+    """
 # Figure & Table 1: Are functional vs structural patients from different SIMD quintiles?
     SIMDGroupT = []
     SIMDGroupT.append(pd.crosstab(index=[df.ExpGroups], columns=df.T0_SIMD04,
@@ -942,6 +1109,22 @@ def SNSSSocioeconomicAssessment(df):
 
 
 def performanceMetrics(trainDat, evalDat):
+    """ General function for assessing training vs eval performance
+
+    Takes two arrays of Nx2 size. Each array is made up of a TRUE label [0] and
+    a PREDICTED Score [1], the arrays are training and eval. The function computes
+    binary or multivariate performance metrics and outputs a dictionary.
+
+    Args:
+        trainDat: An Nx2 array of true labels and predicted scores for the training set.
+        trainDat: An Nx2 array of true labels and predicted scores for the eval set.
+
+    Returns:
+        perfDict: A dictionary which includes the original scores and labels as well as
+                  all computed metrics.
+    Raises:
+        NONE
+    """
     perfDict = {}
     nClasses = len(np.unique(trainDat[0]))
     dLabels = ['train', 'eval']
@@ -1016,79 +1199,6 @@ def performanceMetrics(trainDat, evalDat):
             # perfDict[dLabels[i] + 'MacroAuroc'] = macroAuroc
             i += 1
     return perfDict
-
-
-# def UVLogisticRegression(df, featureSet, outcomeVar, featMetaData, dummyExceptionDict):
-#     """ Derived from MV code"""
-#     mdlExportTArray = []
-#     mdlArray = []
-#     for P in featureSet:  # For each feature construct k-1 dummy array and construct model.
-#         # Exclude missing data from featureSet subset
-#         rDat = df.dropna(subset=[P] + [outcomeVar])
-#
-#         # Initialise feat & outcome arrays
-#         outcome = np.asarray(rDat[outcomeVar]).astype(int)  # Initialise outcome array, MUST BE BINARY
-#         feats = np.ones([len(rDat), 1]).astype(int)  # Initialise dummy feat array with constant
-#         featNames = ['constant']  # Initialise dummy featNames array with constant
-#         sigTestIdx = {}
-#         if rDat[P].dtype.name != 'category':  # If not a categorical then convert...
-#             rDat[P] = pd.Categorical(rDat[P])
-#
-#         # Drop single category as constant.
-#         # Decision based on dummy exception dict, defaults to first category.
-#         try:
-#             X = pd.get_dummies(rDat[P], drop_first=False).drop(axis=1,
-#                                                                columns=dummyExceptionDict[P])
-#         except (KeyError) as err:
-#             X = pd.get_dummies(rDat[P], drop_first=True)
-#
-#         # Translate categorical series labels into SNSS var value labels..
-#         varDict = dict(zip(featMetaData[P]['values'],
-#                            featMetaData[P]['valuelabels']))
-#         for col in range(X.shape[1]):  # Construct featNames array for output
-#             try:
-#                 featNames.append(featMetaData[P]['label'] + ' - ' +
-#                                  varDict[X.columns.
-#                                          categories[X.columns.codes].values.tolist()[col]])
-#             except (KeyError) as err:
-#                 # Convert int column names to str
-#                 featNames.append(featMetaData[P]['label'] + ' - ' +
-#                                  str(X.columns.
-#                                      categories[X.columns.codes].values.tolist()[col]))
-#
-#         # Save column indices of each P in dict for significance testing later...
-#         sigTestIdx[P] = range(feats.shape[1], feats.shape[1]+X.shape[1])
-#         # Append dummy encoded variable to exog array...
-#         feats = np.append(feats, X, axis=1)
-#
-#         # Construct Logistic model from all variable array...
-#         lr = Logit(endog=outcome, exog=feats)
-#         mdl = lr.fit(disp=0)
-#
-#         # Export salient mdl features into table for writing...
-#         mdlExportT = pd.DataFrame(mdl.params, index=[[P]*len(featNames), featNames],
-#                                   columns=['coeff'])
-#         mdlExportT['coeffLCI'] = mdl.conf_int()[:, 0]
-#         mdlExportT['coeffUCI'] = mdl.conf_int()[:, 1]
-#         mdlExportT['OR'] = np.exp(mdl.params)
-#         mdlExportT['ORLCI'] = np.exp(mdl.conf_int())[:, 0]
-#         mdlExportT['ORUCI'] = np.exp(mdl.conf_int())[:, 1]
-#         mdlExportT['p'] = mdl.pvalues
-#
-#         pValArray = [1]
-#         # Variable significance testing...
-#         testLr = Logit(endog=outcome, exog=np.delete(feats, sigTestIdx[P], axis=1))
-#         testMdl = testLr.fit(disp=0)
-#         Chi2p = 1 - stats.chi2.cdf(2*(mdl.llf - testMdl.llf), df=len(sigTestIdx[P]))
-#         pValArray = pValArray + [Chi2p]*len(sigTestIdx[P])
-#         mdlExportT['llrp'] = pValArray
-#
-#         # Add to array of univariate models for export.
-#         mdlExportTArray = mdlExportTArray + [mdlExportT]
-#         mdlArray = mdlArray + [mdl]
-#
-#     UVMdlExportT = pd.concat(mdlExportTArray, axis=0)
-#     return UVMdlExportT, mdlArray
 
 def UVLogisticRegression_v2(df, featureSet, outcomeVar, featMetaData, featDataTypeDict,
                             dummyExceptionDict, trainIdx=[], evalIdx=[]):
@@ -1195,96 +1305,6 @@ def UVLogisticRegression_v2(df, featureSet, outcomeVar, featMetaData, featDataTy
 
     UVMdlExportT = pd.concat(mdlExportTArray, axis=0)
     return UVMdlExportT, mdlArray, modelSummaryInfoDict
-
-# def MVLogisticRegression(df, featureSet, outcomeVar, featMetaData, dummyExceptionDict,
-#                          trainIdx=[], evalIdx=[]):
-#     """ DESCRIPTION NEEDED """
-#     # Exclude missing data from featureSet subset
-#     rDat = df.dropna(subset=featureSet + [outcomeVar])
-#
-#     # Initialise feat & outcome arrays
-#     outcome = np.asarray(rDat[outcomeVar]).astype(int)  # Initialise outcome array, MUST BE BINARY
-#     feats = np.ones([len(rDat), 1]).astype(int)  # Initialise dummy feat array with constant
-#     featNames = ['constant']  # Initialise dummy featNames array with constant
-#     featNameIndex = ['constant']
-#     sigTestIdx = {}
-#     modelSummaryInfo = {}
-#     for P in featureSet:  # For each feature construct k-1 dummy array and add to feats array.
-#         if rDat[P].dtype.name != 'category':  # If not a categorical then convert...
-#             rDat[P] = pd.Categorical(rDat[P])
-#
-#         # Drop single category as constant.
-#         # Decision based on dummy exception dict, defaults to first category.
-#         try:
-#             X = pd.get_dummies(rDat[P], drop_first=False).drop(axis=1,
-#                                                                columns=dummyExceptionDict[P])
-#         except (KeyError) as err:
-#             X = pd.get_dummies(rDat[P], drop_first=True)
-#
-#         # Translate categorical series labels into SNSS var value labels..
-#         varDict = dict(zip(featMetaData[P]['values'],
-#                            featMetaData[P]['valuelabels']))
-#         for col in range(X.shape[1]):  # Construct featNames array for output
-#             try:
-#                 featNames.append(featMetaData[P]['label'] + ' - ' +
-#                                  varDict[X.columns.
-#                                          categories[X.columns.codes].values.tolist()[col]])
-#             except (KeyError) as err:
-#                 # Convert int column names to str
-#                 featNames.append(featMetaData[P]['label'] + ' - ' +
-#                                  str(X.columns.
-#                                      categories[X.columns.codes].values.tolist()[col]))
-#         featNameIndex = featNameIndex + ([P]*len(range(X.shape[1])))  # Label for indexing in pandas export T
-#         # Save column indices of each P in dict for significance testing later...
-#         sigTestIdx[P] = range(feats.shape[1], feats.shape[1]+X.shape[1])
-#         # Append dummy encoded variable to exog array...
-#         feats = np.append(feats, X, axis=1)
-#
-#     if len(trainIdx) == 0:
-#         trainIdx = np.linspace(0, len(outcome)-1, len(outcome)).astype(int)
-#     if len(evalIdx) == 0:
-#         evalIdx = np.linspace(0, len(outcome)-1, len(outcome)).astype(int)
-#     # Construct Logistic model from all variable array...
-#     lr = Logit(endog=outcome[trainIdx], exog=feats[trainIdx, :])
-#     mdl = lr.fit(disp=0)
-#
-#     # Variable significance testing...
-#     pValArray = [1]
-#     for P in featureSet:
-#         testLr = Logit(endog=outcome, exog=np.delete(feats, sigTestIdx[P], axis=1))
-#         testMdl = testLr.fit(disp=0)
-#         Chi2p = 1 - stats.chi2.cdf(2*(mdl.llf - testMdl.llf), df=len(sigTestIdx[P]))
-#         pValArray = pValArray + [Chi2p]*len(sigTestIdx[P])
-#
-#     # Export salient mdl features into table for writing...
-#     mdlExportT = pd.DataFrame(mdl.params, index=[featNameIndex, featNames],
-#                               columns=['coeff'])
-#     mdlExportT['coeffLCI'] = mdl.conf_int()[:, 0]
-#     mdlExportT['coeffUCI'] = mdl.conf_int()[:, 1]
-#     mdlExportT['OR'] = np.exp(mdl.params)
-#     mdlExportT['ORLCI'] = np.exp(mdl.conf_int())[:, 0]
-#     mdlExportT['ORUCI'] = np.exp(mdl.conf_int())[:, 1]
-#     mdlExportT['p'] = mdl.pvalues
-#     mdlExportT['llrp'] = pValArray
-#
-#     # Assess trained model predictive capacity
-#     trainTrue = outcome[trainIdx]
-#     trainScore = mdl.predict()
-#     evalTrue = outcome[evalIdx]
-#     evalScore = mdl.predict(feats[evalIdx])
-#     modelSummaryInfo.update(performanceMetrics([trainTrue, trainScore], [evalTrue, evalScore]))
-#
-#     # Store common info and model objectin model summary output dict.
-#     modelSummaryInfo['nTotal'] = len(outcome)
-#     modelSummaryInfo['nTrain'] = len(trainIdx)
-#     modelSummaryInfo['nEval'] = len(evalIdx)
-#     modelSummaryInfo['partitionRatio'] = len(trainIdx)/(len(evalIdx)+len(trainIdx))
-#     modelSummaryInfo['outcomeVar'] = outcome
-#     modelSummaryInfo['outcomeLabels'] = featMetaData[outcomeVar]['truncvaluelabels']
-#     modelSummaryInfo['modelType'] = 'logisticRegression'
-#     modelSummaryInfo['featureSet'] = str(feats)
-#     modelSummaryInfo['nFeatures'] = len(feats)
-#     return mdlExportT, mdl, modelSummaryInfo
 
 def MVLogisticRegression_v2(df, featureSet, outcomeVar, featMetaData, featDataTypeDict,
                             dummyExceptionDict, trainIdx=[], evalIdx=[]):
@@ -2072,11 +2092,6 @@ def NNModelSummaryPlot(msi, dir='output/NNoutput/'):
                               'Multiclass Precision: '+str(msi['evalPrecision'])+'. ' +\
                               'Multiclass Recall: '+str(msi['evalRecall'])+'. '
     strArray = txtwrp.fill(strArray+'Feature Set: '+str(msi['featureSet']), 40)
-
-    # 'Multiclass AUROC: '+str(msi['evalAuroc']),
-    # 'Multiclass Sensitivity: '+str(msi['evalRecall']),
-    # 'Multiclass Specificity: '+str(msi['evalRecall']),
-    # 'Multiclass Optimal Operating Point: '+str(msi['evalOperatingThreshold'])])
 
     txtSumm.text(0, 0, strArray, **textParams)
     txtSumm.set_ylim([-20, 0])
