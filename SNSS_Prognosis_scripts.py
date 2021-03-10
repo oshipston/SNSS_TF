@@ -1,9 +1,16 @@
 #!/usr/bin/env python3.6
-""" This is a drafting script for SNSS_TF"""
-import os
-# Ensure CWD is correct..
-os.chdir("/Users/oss/documents/code/SNSS_TF")
-# Import study functions
+
+__author__ = "Oliver Shipston-Sharman"
+__copyright__ = "Copyright 2021, Oliver Shipston-Sharman"
+__credits__ = ["Oliver Shipston-Sharman", "Stoyan Popkirov", "Christian H Hansen", "Alan Carson", "Jon Stone"]
+
+__license__ = "Apache-2.0"
+__version__ = "0.1.0"
+__maintainer__ = "Oliver Shipston-Sharman"
+__email__ = "oliver.shipston-sharman@nhs.net"
+
+# import os
+# os.chdir("yourRootDirectory")
 import SNSS_Prognosis_functions as oss
 
 # //////////////////////////////////////////////////////////////////////////////
@@ -17,7 +24,7 @@ varGroups = cfg['varGroups']
 featMetaData = oss.loadJSON("raw_data/SNSS_vars.json")
 
 """ Data Pipeline 1. Import dataset from UofE SMB Datashare of local file """
-raw = oss.import_SNSS(usr=input("User: "), pwd=input("Password: "), local_file=1)
+# raw = oss.import_SNSS(usr=input("User: "), pwd=input("Password: "), local_file=1)
 # # If provided with a URL to University of Edinburgh datasahre your UofE credentials
 # can be provided here for off-device secure storage of data.
 # //////////////////////////////////////////////////////////////////////////////
@@ -84,7 +91,7 @@ dummyExceptionDict = {'T0_SF12_PF': 100.0,
                       'ExpGroups': 2.0}
 
 # //////////////////////////////////////////////////////////////////////////////
-"""Analysis 0. Compare lost to follow up and follow up groups"""
+"""Analysis 1. Compare lost to follow up and follow up groups"""
 # //////////////////////////////////////////////////////////////////////////////
 # Do functional and structural/lost to follow up and followed up groups differ?
 oss.FollowUpandBaselineComparison(SNSSDf)
@@ -119,7 +126,7 @@ byGroupMdlT['Explained'].to_csv('output/0_MVAnalysis_Explained'+outcome+'.tsv', 
 oss.logitCoeffForestPlot(byGroupMdlT, mdl=[], tag=['0', 'MV', outcome],
                          groupVar=groupVar, returnPlot=False)
 # //////////////////////////////////////////////////////////////////////////////
-""" Analysis 1. Compare outcomes between functional category"""
+""" Analysis 2. Compare outcomes between functional category"""
 # //////////////////////////////////////////////////////////////////////////////
 # Do functional patients report different outcomes?
 outcome = ['T2_poorCGI', 'T2_poorIPS', 'T2_HealthChange', 'T2_SymptomsChange']
@@ -128,7 +135,7 @@ _ = oss.SNSSPrimaryOutcomeMeasures(SNSSDf)
 oss.primaryOutcomePlot(outcome, groupVar, SNSSDf, featMetaData, style='stacked')
 
 # //////////////////////////////////////////////////////////////////////////////
-"""Analysis 2. Assess secondary outcomes"""
+"""Analysis 3. Assess secondary outcomes"""
 # //////////////////////////////////////////////////////////////////////////////
 # Do SF12, HADS and symptom counts describe different trajectories
 # over the study period?
@@ -141,14 +148,14 @@ _ = oss.SNSSSecondaryOutcomeMeasures(SNSSDf)
 oss.secondaryOutcomePlot(outcome, groupVar, SNSSDf, featMetaData, style='line')
 
 # //////////////////////////////////////////////////////////////////////////////
-"""Analysis 3. Validate Scottish Index of Multiple Deprivation 2004 Interactions"""
+"""Analysis 4. Validate Scottish Index of Multiple Deprivation 2004 Interactions"""
 # //////////////////////////////////////////////////////////////////////////////
 # Given differences in receipt of benefit does living in a deprived area
 # explain the observed effect? Warning: this takes some time to plot..
 _ = oss.SNSSSocioeconomicAssessment(SNSSDf)
 
 # //////////////////////////////////////////////////////////////////////////////
-"""Analysis 4. Compute univariate odds ratios for poor outcome:"""
+"""Analysis 5. Compute univariate odds ratios for poor outcome:"""
 # //////////////////////////////////////////////////////////////////////////////
 # Which variables predict poor outcome in functional vs structural patients?
 featureSet = sharpe2010Set
@@ -171,7 +178,7 @@ byGroupMdlT['Explained'].to_csv('output/4_UVAnalysis_Explained'+outcome+'.tsv', 
 oss.logitCoeffForestPlot(byGroupMdlT, mdl=[], tag=['4', 'UV', outcome],
                          groupVar=groupVar, returnPlot=False)
 
-"""Addendum to Analysis 4: Combined analysis with diagnosis as predictor"""
+"""Addendum to Analysis 5: Combined analysis with diagnosis as predictor"""
 sharpe2010SetAdapted = ['AgeBinInt', 'Gender_bin', 'ExpGroups_bin', 'T0_PHQNeuro28_BinInt',
                         'T0_SF12_PF_BinInt', 'T0_HADS_BinInt', 'T0_NegExpectation',
                         'T0_LackofPsychAttribution', 'T0_IllnessWorry',
@@ -215,7 +222,7 @@ UVMdlExportT.to_csv('output/4adapted_UVAnalysis_All'+outcome+'.tsv', sep='\t')
 oss.logitCoeffForestPlot({'All': UVMdlExportT}, mdl=[], tag=['4adapted', 'UV', outcomeVar],
                          groupVar='All', returnPlot=False)
 # //////////////////////////////////////////////////////////////////////////////
-"""Analysis 5. Compute multivariate odds ratios for poor outcome"""
+"""Analysis 6. Compute multivariate odds ratios for poor outcome"""
 # //////////////////////////////////////////////////////////////////////////////
 # Which variables predict poor outcome in functional vs structural patients when
 # accounting for all others?
@@ -237,7 +244,7 @@ byGroupMdlT['Not Explained'].to_csv('output/5_MVAnalysis_NotExplained'+outcomeVa
 byGroupMdlT['Explained'].to_csv('output/5_MVAnalysis_Explained'+outcomeVar+'.tsv', sep='\t')
 oss.logitCoeffForestPlot(byGroupMdlT, mdl=[], tag=['5', 'MV', outcomeVar],
                          groupVar=groupVar, returnPlot=False)
-"""Addendum to Analysis 5: Combined analysis with diagnosis as predictor"""
+"""Addendum to Analysis 6: Combined analysis with diagnosis as predictor"""
 outcomeVar = 'T2_poorCGI'
 featureSet = sharpe2010SetAdapted
 mdlExportT, mdl, msi = oss.MVLogisticRegression_v2(df=SNSSDf,
@@ -252,7 +259,7 @@ oss.logitCoeffForestPlot({'All': mdlExportT}, mdl=[], tag=['5adapted', 'MV', out
                          groupVar='All', returnPlot=False)
 
 # //////////////////////////////////////////////////////////////////////////////
-"""Analysis 6 Reduce data set with UV regression coefficients/p-vals"""
+"""Analysis 7 Reduce data set with UV regression coefficients/p-vals"""
 # //////////////////////////////////////////////////////////////////////////////
 # Feature Selection with UV Regression
 featureSet = wholeSet
@@ -298,7 +305,7 @@ multiGroupException = {1: 1.0,   # State which dummy values to drop for each gro
 #                              groupVar='All', returnPlot=False)
 
 # //////////////////////////////////////////////////////////////////////////////
-"""Analysis 7. NN Assessment of SNSS Prognosis"""
+"""Analysis 8. NN Assessment of SNSS Prognosis"""
 # //////////////////////////////////////////////////////////////////////////////
 # Declare the groups/datasets of interest...
 F_OIdx = (SNSSDf['ExpGroups'] == 1)

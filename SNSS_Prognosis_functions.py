@@ -1117,7 +1117,7 @@ def performanceMetrics(trainDat, evalDat):
 
     Args:
         trainDat: An Nx2 array of true labels and predicted scores for the training set.
-        trainDat: An Nx2 array of true labels and predicted scores for the eval set.
+        evalDat: An Nx2 array of true labels and predicted scores for the eval set.
 
     Returns:
         perfDict: A dictionary which includes the original scores and labels as well as
@@ -1202,7 +1202,29 @@ def performanceMetrics(trainDat, evalDat):
 
 def UVLogisticRegression_v2(df, featureSet, outcomeVar, featMetaData, featDataTypeDict,
                             dummyExceptionDict, trainIdx=[], evalIdx=[]):
-    """ Derived from MV code"""
+    """ Conducts univariable logistic regression for every variable in the feature set.
+
+    Takes a dataframe, feature set and outcome variable and conducts univariable logistic modelling.
+
+    Args:
+        df: The pandas dataframe object
+        featureSet: The names of columns to be assess as inputs into the model. (Exog)
+        outcomeVar: The outcome variable. (Endog)
+        featMetaData: Feature meta data for constructing legible tables etc.
+        featDataTypeDict: Feature data type dictionary e.g. discrete vs continuous. NOTE variables will be treated as per this in the models
+                          discrete variables will be dummy encoded automatically.
+        dummyExceptionDict: A dictionary of variables and the value to use as the dummy variable if not the first.
+        trainIdx: Dataframe indices for observations to be used for training. If empty all will be used.
+        evalIdx: Dataframe indices for observations to be used for evaluation. If empty all will be used.
+
+    Returns:
+        UVMdlExportT: Returns the model results in a table of OR CIs and p-values.
+        mdlArray: Returns an array of statsmodels regression objects.
+        modelSummaryInfoDict: A dict of dictionaries containing summary statistics about each model.
+
+    Raises:
+        NONE
+    """
     mdlExportTArray = []
     mdlArray = []
     modelSummaryInfoDict = {}
@@ -1308,7 +1330,29 @@ def UVLogisticRegression_v2(df, featureSet, outcomeVar, featMetaData, featDataTy
 
 def MVLogisticRegression_v2(df, featureSet, outcomeVar, featMetaData, featDataTypeDict,
                             dummyExceptionDict, trainIdx=[], evalIdx=[]):
-    """ DESCRIPTION NEEDED """
+    """ Conducts multivariable logistic regression for all variables in the feature set.
+
+    Takes a dataframe, feature set and outcome variable and conducts multivariable logistic modelling.
+
+    Args:
+        df: The pandas dataframe object
+        featureSet: The names of columns to be assess as inputs into the model. (Exog)
+        outcomeVar: The outcome variable. (Endog)
+        featMetaData: Feature meta data for constructing legible tables etc.
+        featDataTypeDict: Feature data type dictionary e.g. discrete vs continuous. NOTE variables will be treated as per this in the models
+                          discrete variables will be dummy encoded automatically.
+        dummyExceptionDict: A dictionary of variables and the value to use as the dummy variable if not the first.
+        trainIdx: Dataframe indices for observations to be used for training. If empty all will be used.
+        evalIdx: Dataframe indices for observations to be used for evaluation. If empty all will be used.
+
+    Returns:
+        mdlExportT: Returns the model results in a table of OR CIs and p-values.
+        mdl: Returns the statsmodels regression object.
+        modelSummaryInfo: An dicionary containing summary statistics the model.
+
+    Raises:
+        NONE
+    """
     # Exclude missing data from featureSet subset
     rDat = df.dropna(subset=featureSet + [outcomeVar])
 
@@ -1405,6 +1449,30 @@ def MVLogisticRegression_v2(df, featureSet, outcomeVar, featMetaData, featDataTy
 
 def multiGroupLogisticRegression(df, featureSet, outcomeVar, featMetaData, featDataTypeDict, dummyExceptionDict,
                                  groupVar, multiGroupException, MV):
+    """ Conducts multivariable logistic regression for all variables in the feature set.
+
+    Takes a dataframe, feature set and outcome variable and condnucts group-wise logistic modelling.
+
+    Args:
+        df: The pandas dataframe object
+        featureSet: The names of columns to be assess as inputs into the model. (Exog)
+        outcomeVar: The outcome variable. (Endog)
+        featMetaData: Feature meta data for constructing legible tables etc.
+        featDataTypeDict: Feature data type dictionary e.g. discrete vs continuous. NOTE variables will be treated as per this in the models
+                          discrete variables will be dummy encoded automatically.
+        dummyExceptionDict: A dictionary of variables and the value to use as the dummy variable if not the first.
+        groupVar: The name of the grouping variable.
+        multiGroupException: When there are featrues exclusive to each group, dict for deciding which value to dummy encode.
+        MV: Binary, if true conduct multivariable modelling, if false conduct univariate modelling.
+
+    Returns:
+        byGroupLinearMdlExportT: Returns the model results in a table of OR CIs and p-values. In a group-wise dictionary.
+        byGroupLinearMdls: Returns the statsmodels regression object. In a group-wise dictionary.
+        byGroupMSI: An dicionary containing summary statistics the model. In a group-wise dictionary.
+
+    Raises:
+        NONE
+    """
     groupVarDict = dict(zip(featMetaData[groupVar]['values'],
                             featMetaData[groupVar]['valuelabels']))
     byGroupLinearMdlExportT = {}
@@ -1434,9 +1502,23 @@ def multiGroupLogisticRegression(df, featureSet, outcomeVar, featMetaData, featD
 
 
 def logitCoeffForestPlot(predictorTables, mdl, tag, groupVar, returnPlot=False):
-    """ Forest plot of univariate coefficients """
-    # Takes a table of regression coefficients arranged in a dictionary by group and with:
-    # values for: coeff, coeffLCI, coeffUCI, OR, ORLCI, ORUCI, p
+        """ Plotting function for regression coefficients as a forest plot.
+
+        Takes a table of regression coefficients arranged in a dictionary by group and with
+        values for: coeff, coeffLCI, coeffUCI, OR, ORLCI, ORUCI, p
+
+        Args:
+            predictorTables: the mdlExportT outputed from logistic regressino functions.
+            mdl: The statsmodels mdl objects
+            tag: The tag used when saving plots.
+            groupVar: The group variable with which to navigate groupwise results table outputted from aboove function.
+            returnPlot=False: Whether to return plot from call, will always save directly.
+        Returns:
+            Nothing if returnPlot=FALSE. Figure object if TRUE.
+
+        Raises:
+            NONE
+        """
 
     #  Rough adaptation of figure size accoridng to number of variables.
     figHeight = round(predictorTables[list(predictorTables.keys())[0]].shape[0]/3.3)
@@ -1516,8 +1598,18 @@ def logitCoeffForestPlot(predictorTables, mdl, tag, groupVar, returnPlot=False):
 
 
 def SNSSSecondaryMeasuresvsPrimaryOutcome(df):
-    """Speculative scatter plots assessing correlation between
-    reported CGI and IPS and reported SF12 HADS and symptom counts"""
+    """ Draft plotting function to assess primary and secondary outcome relationship.
+
+    Non-general function. Takes a dataframe and outputs a seaborn pairplot.
+
+    Args:
+        df: dataframe object
+    Returns:
+        Nothing.
+
+    Raises:
+        NONE
+    """
     outcomes = ['T0_PHQNeuro28_Total',
                 'T0_HADS',
                 'T0_SF12_NormedMCS',
@@ -1556,6 +1648,26 @@ def SNSSSecondaryMeasuresvsPrimaryOutcome(df):
 
 
 def NNDummyEncoder(rawFeatures, outcome, df, featMetaData, k_dummy=False):
+    """ Dummy encoder for neural network analysis.
+
+    Takes the names of the feature set and the outcome variable and compiles the input array in dummy encoded form.
+    NOTE This function at present only works with categorical features.
+
+    Args:
+        rawFeatures:[List] The input variable names.
+        outcome: [List] The outcome variable name.
+        df: The pandas dataframe object.
+        featMetaData: Variable metadata fmor file.
+        k_dummy=False: Whether to K encode or K-1 encode.
+    Returns:
+        y: Array of outcome labels.
+        x: A FxN matrix of input features.
+        varNames: The variable names in order within x.
+        varLabels: The labels used for the vairables.
+
+    Raises:
+        NONE
+    """
     rDat = df[df[outcome].notna()].dropna(subset=rawFeatures)
     # Drop missing observations from relevant subset.
     rDat = rDat.dropna(subset=rawFeatures)
@@ -1620,6 +1732,19 @@ def NNDummyEncoder(rawFeatures, outcome, df, featMetaData, k_dummy=False):
 
 
 def NNStructurePlot(kerasModel):
+    """ Plotting function for NN model (SLOW WHEN A LARGE NETWORK)
+
+    Takes the names of the feature set and the outcome variable and compiles the input array in dummy encoded form.
+    NOTE This function at present only works with categorical features.
+
+    Args:
+        kerasModel: The keras model object for plotting.
+    Returns:
+        Nothing
+
+    Raises:
+        NONE
+    """
     fig = plt.figure(num=1, figsize=(6, 6), dpi=200, frameon=False)
     ax = fig.add_subplot(1, 1, 1)
 
@@ -1661,9 +1786,27 @@ def NNStructurePlot(kerasModel):
     fig.savefig('output/6_' + tag + '_modelStructure.pdf', dpi=300,
                 format='pdf', pad_inches=0.1, bbox_inches='tight')
     plt.close()
-
+    return
 
 def hiddenLayerNGen(nHiddenLayers, nFeats, convergeFun, minLayerSize, maxLayerSize, nOutput):
+    """ Function for generating N for hidden layers in the DNN
+
+    Takes the names of the feature set and the outcome variable and compiles the input array in dummy encoded form.
+    NOTE This function at present only works with categorical features.
+
+    Args:
+        nHiddenLayers: Int how many hidden layers are being used.
+        nFeats: Int the input layer size
+        convergeFun: Str The progressino of the hidden layer size.
+        minLayerSize: Int Smallest hidden layer Size
+        maxLayerSize: Int Greatest hidden layer Size
+        nOutput: Int the output layer size.
+    Returns:
+        layerSizes: A list of integers with the size of each hidden layer in the DNN.
+
+    Raises:
+        NONE
+    """
     if (convergeFun == 'linDesc'):
         maxCoeff = 0.8
         c = min([maxLayerSize, (maxCoeff*nFeats)])
@@ -1683,6 +1826,22 @@ def hiddenLayerNGen(nHiddenLayers, nFeats, convergeFun, minLayerSize, maxLayerSi
 
 
 def MLPAnalysis(df, features, outcome, featMetaData, params):
+    """ Function for undertaking DNN analysis (Multi-layer perceptron)
+
+    Conducts
+
+    Args:
+        df:The pandas dataframe object
+        features: The input feature names.
+        outcome: The outcome variable name.
+        featMetaData: Variable feature metadata for file.
+        params: DNN parameter dictionary
+    Returns:
+        modelSummaryInfo: A dictionary including the keras Model object and summary data.
+
+    Raises:
+        NONE
+    """
     verbose = 0
     modelSummaryInfo = {}
     # Extract key model features from param dict
@@ -1937,6 +2096,20 @@ def MLPAnalysis(df, features, outcome, featMetaData, params):
 
 
 def MLPHyperParameterSweep(problemDict, hpDict, featMetaData):
+    """ Function for undertaking MLP hyperparameter sweeps
+
+    Conducts hyperparameter trials across the defined HP space and returns a dictinoary of all models.
+
+    Args:
+        problemDict: The feature set, outcome and dataframe objects stored in an apporpriate dicitonary.
+        hpDict: The hyperparameters and arrays governing the stating the possible values.
+        featMetaData: feature metadata from file.
+    Returns:
+        modelDict: A dictionary including the keras Model objects and summary dat for each model in the HP sweep.
+
+    Raises:
+        NONE
+    """
     # Extract problem definition from problem dict.
     featureSet = problemDict['featureSet']['value']
     outcome = problemDict['outcome']['value']
@@ -1956,7 +2129,7 @@ def MLPHyperParameterSweep(problemDict, hpDict, featMetaData):
             mdlStr = '_'.join([problemDict['df']['label'],
                                problemDict['featureSet']['label'],
                                problemDict['outcome']['label']]+[str(s) for s in HpComb])
-    # Partition Data (can be done randomely by MLP function but importnatn for consistancy here.)
+    # Partition Data (can be done randomly by MLP function but important for consistancy here.)
             trainIdx, evalIdx = partitionData(df,
                                     partitionRatio=HpComb[hpDict['partitionRatioArray']['order']])
 
@@ -1995,6 +2168,19 @@ def MLPHyperParameterSweep(problemDict, hpDict, featMetaData):
 
 
 def kFoldPartition(df, k):
+    """ K-Fold paritioning function.
+
+    Takes a pandas dataframe and splits into folds according to number k.
+
+    Args:
+        df: Pandas dataframe object.
+        k: The number of folds.
+    Returns:
+        folds: The training and eval indicies for a K-length array of folds.
+
+    Raises:
+        NONE
+    """
     randIdx = np.linspace(0, df.shape[0]-1, df.shape[0]).astype(int)
     np.random.shuffle(randIdx)
     slices = (len(randIdx)*np.linspace(0, 1, k+1)).astype(int)
@@ -2009,6 +2195,21 @@ def kFoldPartition(df, k):
 
 
 def crossValidatedMLPAnalysis(problemDict, paramDict, featMetaData, k=10):
+    """ K-Fold cross-validation
+
+    Takes the problem parameters and outputs cross-validated performance metrics.
+
+    Args:
+        problemDict: Problem dict wih feature set, outcome var and df.
+        paramDict: The DNN model parameters to be used.
+        featMetaData: variable meta data from file.
+        k=10 : the number of folds to cross-validate over.
+    Returns:
+        modeDict: A dictinoary of the cross-validation models.
+
+    Raises:
+        NONE
+    """
     featureSet = problemDict['featureSet']['value']
     outcome = problemDict['outcome']['value']
     df = problemDict['df']['value']
@@ -2042,6 +2243,19 @@ def crossValidatedMLPAnalysis(problemDict, paramDict, featMetaData, k=10):
 
 
 def NNModelSummaryPlot(msi, dir='output/NNoutput/'):
+    """ Principal model assessment plot.
+
+    Takes the model summary information dictionairy and performs illustrative/diagnostic plotting.
+
+    Args:
+        msi: The model sumary information dictionary outputed form MLP analysis.
+        dir: The ouput directory
+    Returns:
+        Nothing. Saves diagnostic figure in dir.
+
+    Raises:
+        NONE
+    """
     # NNSummary Plot
     def moving_average(signal, period):
         buffer = [np.nan] * period
@@ -2209,11 +2423,24 @@ def NNModelSummaryPlot(msi, dir='output/NNoutput/'):
     #            msi['modelType'] + '/6_' + msi['groupVar'] + '_' + msi['featureSetTitle'] +
     #            '_' + msi['outcomeVar'] + '_' + str(msi['nLayers']) + 'Layers_' + msi['modelType'] +
     #            '_kerasModelPlot.pdf')
-    """Plotting Functions"""
+    # """Plotting Functions"""
     # NNStructurePlot(kerasModel)
-
+    return
 
 def modelComparisonPlot(modelDict, metrics):
+    """ Model comparison plot.
+
+    Takes a dictionary of model MSIs and plots compartive bar plots of each metric.
+
+    Args:
+        modelDict: The model summary information dictionary outputed form MLP analysis.
+        metrics: names of the metrics to plot.
+    Returns:
+        Nothing. Saves figures to stated dir.
+
+    Raises:
+        NONE
+    """
     fig = plt.figure(num=1, figsize=(4, 4), dpi=300, frameon=False)
     # Subplot 1: Model Details
     legendLines = []
@@ -2287,6 +2514,18 @@ def modelComparisonPlot(modelDict, metrics):
 
 
 def exportTrainingGif(msi):
+    """ VERY SLOW Takes MSI dictionary and plots epoch performance over time in an animated GIF.
+
+    Takes a dictionary of model MSIs and plots compartive bar plots of each metric.
+
+    Args:
+        MSI: The model summary information dictionary outputed form MLP analysis.
+    Returns:
+        Nothing. Saves figures to stated dir.
+
+    Raises:
+        NONE
+    """
     figParams = {'num': 1,
                  'figsize': (8, 3),
                  'dpi': 100,
@@ -2330,11 +2569,27 @@ def exportTrainingGif(msi):
                  'loop': 1,
                  'palettesize': 256}
     print('Saving GIF...')
-    imgio.mimsave('output/NNoutput/withOUTCOMEhistGIF.gif', imgs, 'GIF', **gifParams)
+    imgio.mimsave('output/NNoutput/NNEPOCHperformance.gif', imgs, 'GIF', **gifParams)
     plt.close()
 
 
 def findOptimalCheckpoint(checkpointDict, checkpointDir, comparisonMetric='evalAuroc'):
+    """ Finds and evaluates the optimal model.
+
+    Models output from parameter sweeps are those kicked after earlyStopping NOT necessarily the optimally performing.
+    During fitting the optimal checkpoitn is saved in a .h5 file by TensorFlow. THESE are the models to compare not the final
+    ones output in the fitting process.
+
+    Args:
+        checkpointDict: The model dict output from the HP sweep.
+        checkpointDir: The directory where the model checkpoitns are stored.
+        comparisonMetric='evalAuroc': Which metric to compare models by.
+    Returns:
+        Nothing. Saves figures to stated dir.
+
+    Raises:
+        NONE
+    """
     # For saved model in parameter sweep, load each optimal model state compare performance and return optimal model.
     modelKeys = [k for k in checkpointDict.keys()]
     cpPerfArray = {}
@@ -2386,6 +2641,21 @@ def exportPerfTable(performanceArray, metrics=['evalAuroc', 'evalAcc', 'evalSens
 
 
 def fullNNAnalysis(problemDict, hpDict, featMetaData):
+    """ The master DNN function
+
+    A sequence of analyses that faciliate establishing the optimal network architecture and hyperparameter set
+    for a given problem and hyperparameter space.
+
+    Args:
+        problemDict: The feature ste, outcome variabel and df to use.
+        hpDict: The hyperparameter space to be explored.
+        featMetaData: Feature meta data from file.
+    Returns:
+        Nothing. All ouputs are savde to dir during running.
+
+    Raises:
+        NONE
+    """
     hpRawModelDict = MLPHyperParameterSweep(problemDict, hpDict, featMetaData)
     modelComparisonPlot(hpRawModelDict, metrics=['evalAcc', 'evalSens', 'evalSpec', 'evalAuroc'])  # , 'evalAcc', 'evalSens', 'evalSpec'
 
