@@ -4,13 +4,12 @@
 
 **Department**: Centre for Clinical Brain Sciences, University of Edinburgh, Edinburgh, United Kingdom
 
-**Authors**: Oliver Shipston-Sharman1, Stoyan Popkirov2, Christian H Hansen3, Jon Stone1, Alan Carson1,4
+**Authors**: Oliver Shipston-Sharman1, Stoyan Popkirov2, Christian H Hansen3, Jon Stone1, Alan Carson1
 
 **Author Affiliations**
 1. Centre for Clinical Brain Sciences, University of Edinburgh, Edinburgh, United Kingdom.
 2. Department of Neurology, University Hospital Knappschaftskrankenhaus Bochum, Ruhr University Bochum, Bochum, Germany.
 3. Faculty of Epidemiology and Population Health, London School of Hygiene and Tropical Medicine, London, United Kingdom.
-4. Scottish Neurobehavioural Rehabilitation Unit, Royal Edinburgh Hospital, Edinburgh, United Kingdom.
 
 ## Abstract
 **Background:** Predicting outcomes in functional neurological disorders remains a challenge with unique predictors and reliable models elusive. A comparative assessment of prognosis would facilitate identification of specific markers.
