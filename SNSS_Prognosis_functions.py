@@ -2430,7 +2430,7 @@ def NNModelSummaryPlot(msi, dir='output/NNoutput/'):
 def modelComparisonPlot(modelDict, metrics):
     """ Model comparison plot.
 
-    Takes a dictionary of model MSIs and plots compartive bar plots of each metric.
+    Takes a dictionary of model MSIs and plots comparative bar plots of each metric.
 
     Args:
         modelDict: The model summary information dictionary outputed form MLP analysis.
