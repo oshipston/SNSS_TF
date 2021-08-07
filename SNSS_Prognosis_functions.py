@@ -36,7 +36,6 @@ from sklearn.metrics import confusion_matrix, \
 from scipy.stats import logistic
 from scipy.optimize import curve_fit
 
-# import graphviz
 import pydot
 from tensorflow.keras.metrics import top_k_categorical_accuracy
 from tensorflow.keras.models import Sequential, load_model
@@ -1502,24 +1501,23 @@ def multiGroupLogisticRegression(df, featureSet, outcomeVar, featMetaData, featD
 
 
 def logitCoeffForestPlot(predictorTables, mdl, tag, groupVar, returnPlot=False):
-        """ Plotting function for regression coefficients as a forest plot.
+    """ Plotting function for regression coefficients as a forest plot.
 
-        Takes a table of regression coefficients arranged in a dictionary by group and with
-        values for: coeff, coeffLCI, coeffUCI, OR, ORLCI, ORUCI, p
+    Takes a table of regression coefficients arranged in a dictionary by group and with
+    values for: coeff, coeffLCI, coeffUCI, OR, ORLCI, ORUCI, p
 
-        Args:
-            predictorTables: the mdlExportT outputed from logistic regressino functions.
-            mdl: The statsmodels mdl objects
-            tag: The tag used when saving plots.
-            groupVar: The group variable with which to navigate groupwise results table outputted from aboove function.
-            returnPlot=False: Whether to return plot from call, will always save directly.
-        Returns:
-            Nothing if returnPlot=FALSE. Figure object if TRUE.
+    Args:
+        predictorTables: the mdlExportT outputed from logistic regressino functions.
+        mdl: The statsmodels mdl objects
+        tag: The tag used when saving plots.
+        groupVar: The group variable with which to navigate groupwise results table outputted from aboove function.
+        returnPlot=False: Whether to return plot from call, will always save directly.
+    Returns:
+        Nothing if returnPlot=FALSE. Figure object if TRUE.
 
-        Raises:
-            NONE
-        """
-
+    Raises:
+        NONE
+    """
     #  Rough adaptation of figure size accoridng to number of variables.
     figHeight = round(predictorTables[list(predictorTables.keys())[0]].shape[0]/3.3)
     fig = plt.figure(num=1, figsize=(5, figHeight), dpi=200, frameon=False)

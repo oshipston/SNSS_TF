@@ -9,8 +9,9 @@ __version__ = "0.1.0"
 __maintainer__ = "Oliver Shipston-Sharman"
 __email__ = "oliver.shipston-sharman@nhs.net"
 
-# import os
-# os.chdir("yourRootDirectory")
+import os
+os.chdir('/Users/oss/Documents/code/SNSS_TF')
+os.getcwd()
 import SNSS_Prognosis_functions as oss
 
 # //////////////////////////////////////////////////////////////////////////////
@@ -24,7 +25,7 @@ varGroups = cfg['varGroups']
 featMetaData = oss.loadJSON("raw_data/SNSS_vars.json")
 
 """ Data Pipeline 1. Import dataset from UofE SMB Datashare of local file """
-# raw = oss.import_SNSS(usr=input("User: "), pwd=input("Password: "), local_file=1)
+raw = oss.import_SNSS(usr=input("User: "), pwd=input("Password: "), local_file=1)
 # # If provided with a URL to University of Edinburgh datasahre your UofE credentials
 # can be provided here for off-device secure storage of data.
 # //////////////////////////////////////////////////////////////////////////////
@@ -125,6 +126,48 @@ byGroupMdlT['Not Explained'].to_csv('output/0_MVAnalysis_NotExplained'+outcome+'
 byGroupMdlT['Explained'].to_csv('output/0_MVAnalysis_Explained'+outcome+'.tsv', sep='\t')
 oss.logitCoeffForestPlot(byGroupMdlT, mdl=[], tag=['0', 'MV', outcome],
                          groupVar=groupVar, returnPlot=False)
+
+""" Addendum to Analysis 1."""
+sharpe2010SetAdapted = ['AgeBinInt', 'Gender_bin', 'ExpGroups_bin', 'T0_PHQNeuro28_BinInt',
+                        'T0_SF12_PF_BinInt', 'T0_HADS_BinInt', 'T0_NegExpectation',
+                        'T0_LackofPsychAttribution', 'T0_IllnessWorry',
+                        'T0_IncapacityBenefitorDLA', 'T0_SIMD04_bin',
+                        'ExpGroups_bin*T0_IncapacityBenefitorDLA',
+                        'ExpGroups_bin*T0_LackofPsychAttribution',
+                        'ExpGroups_bin*T0_SIMD04_bin',
+                        'ExpGroups_bin*T0_NegExpectation']
+
+sharpe2010SetAdaptedTypeDict = {'AgeBinInt': 'continuous',
+                                'Gender': 'binary',
+                                'Gender_bin': 'binary',
+                                'ExpGroups_bin': 'binary',
+                                'Diagnosis': 'binary',
+                                'T0_PHQNeuro28_BinInt': 'continuous',
+                                'T0_SF12_PF_BinInt': 'ordinal',
+                                'T0_HADS_BinInt': 'continuous',
+                                'T0_NegExpectation': 'binary',
+                                'T0_LackofPsychAttribution': 'binary',
+                                'T0_IllnessWorry': 'ordinal',
+                                'T0_IncapacityBenefitorDLA': 'binary',
+                                'T0_SIMD04_bin': 'binary',
+                                'ExpGroups_bin*T0_IncapacityBenefitorDLA': 'binary',
+                                'ExpGroups_bin*T0_LackofPsychAttribution': 'binary',
+                                'ExpGroups_bin*T0_SIMD04_bin': 'binary',
+                                'ExpGroups_bin*T0_NegExpectation': 'binary',
+                                'ExpGroups_bin*T0_SF12_PF_BinInt': 'ordinal'}
+
+outcomeVar = 'T2_HCData'
+featureSet = sharpe2010SetAdapted
+UVMdlExportT, mdlArray, mdlMSI = oss.UVLogisticRegression_v2(df=SNSSDf,
+                                                     featureSet=featureSet,
+                                                     outcomeVar=outcomeVar,
+                                                     featMetaData=featMetaData,
+                                                     featDataTypeDict=sharpe2010SetAdaptedTypeDict,
+                                                     dummyExceptionDict=dummyExceptionDict)
+# Results Export...
+UVMdlExportT.to_csv('output/1adapted_UVAnalysis_All'+outcome+'.tsv', sep='\t')
+oss.logitCoeffForestPlot({'All': UVMdlExportT}, mdl=[], tag=['1adapted', 'UV', outcomeVar],
+                         groupVar='All', returnPlot=False)
 # //////////////////////////////////////////////////////////////////////////////
 """ Analysis 2. Compare outcomes between functional category"""
 # //////////////////////////////////////////////////////////////////////////////
@@ -146,6 +189,18 @@ outcome = [[['T0_SF12_NormedMCS', 'T1_SF12_NormedMCS', 'T2_SF12_NormedMCS'],
 groupVar = 'ExpGroups'
 _ = oss.SNSSSecondaryOutcomeMeasures(SNSSDf)
 oss.secondaryOutcomePlot(outcome, groupVar, SNSSDf, featMetaData, style='line')
+
+# REVIEWER Request: Inclusino of employment in secondary outcome measures
+import pandas as pd
+import seaborn as sb
+outcome = ['T0_Inemployment', 'T1_Inemployment', 'T2_Inemployment']
+employmentOverTime = pd.DataFrame()
+featMetaData['ExpGroups']['valuelabels']
+for T in outcome:
+    for G in [1,2]:
+        employmentOverTime.loc[featMetaData['ExpGroups']['valuelabels'][G-1], T] = SNSSDf[T][SNSSDf[groupVar]==G].mean()
+sb.boxplot(x='T0_Inemployment', y='T0_SF12_NormedPCS', data=SNSSDf)
+sb.histplot(x='T2_SF12_NormedMCS', hue='T0_Inemployment', data=SNSSDf)
 
 # //////////////////////////////////////////////////////////////////////////////
 """Analysis 4. Validate Scottish Index of Multiple Deprivation 2004 Interactions"""
@@ -244,6 +299,51 @@ byGroupMdlT['Not Explained'].to_csv('output/5_MVAnalysis_NotExplained'+outcomeVa
 byGroupMdlT['Explained'].to_csv('output/5_MVAnalysis_Explained'+outcomeVar+'.tsv', sep='\t')
 oss.logitCoeffForestPlot(byGroupMdlT, mdl=[], tag=['5', 'MV', outcomeVar],
                          groupVar=groupVar, returnPlot=False)
+
+for G in ['Not Explained', 'Explained']:
+    print(G)
+    print('Accuracy:')
+    print(bootstrap_performance_metric(byGroupMSI['Not Explained']['evalPred'],
+                                 byGroupMSI['Not Explained']['evalTrue'],
+                                 metric='acc'))
+    print('AUROC:')
+    print(bootstrap_performance_metric(byGroupMSI['Not Explained']['evalScore'],
+                                 byGroupMSI['Not Explained']['evalTrue'],
+                                 metric='auroc'))
+
+# Bootstrapping Accuracy and UROC as per reviewer suggestions
+import numpy as np
+from scipy.stats import sem
+from sklearn.metrics import roc_auc_score, accuracy_score
+
+def bootstrap_performance_metric(y_pred, y_true, metric='acc'):
+    n_bootstraps = 1000
+    rng_seed = 42  # control reproducibility
+    bootstrapped_scores = []
+
+    rng = np.random.RandomState(rng_seed)
+    for i in range(n_bootstraps):
+        # bootstrap by sampling with replacement on the prediction indices
+        indices = rng.randint(0, len(y_pred), len(y_pred))
+        if len(np.unique(y_true[indices])) < 2:
+            continue
+        if metric == 'acc':
+            score = accuracy_score(y_true[indices], y_pred[indices])
+        elif metric == 'auroc':
+            score = roc_auc_score(y_true[indices], y_pred[indices])
+
+        bootstrapped_scores.append(score)
+
+    sorted_scores = np.array(bootstrapped_scores)
+    sorted_scores.sort()
+    # Computing the lower and upper bound of the 90% confidence interval
+    # You can change the bounds percentiles to 0.025 and 0.975 to get
+    # a 95% confidence interval instead.
+    CI_lower = sorted_scores[int(0.025 * len(sorted_scores))]
+    CI_upper = sorted_scores[int(0.975 * len(sorted_scores))]
+    mean = np.mean(sorted_scores)
+    return mean, CI_lower, CI_upper
+
 """Addendum to Analysis 6: Combined analysis with diagnosis as predictor"""
 outcomeVar = 'T2_poorCGI'
 featureSet = sharpe2010SetAdapted
@@ -258,6 +358,14 @@ mdlExportT.to_csv('output/5adapted_MVAnalysis_All'+outcomeVar+'.tsv', sep='\t')
 oss.logitCoeffForestPlot({'All': mdlExportT}, mdl=[], tag=['5adapted', 'MV', outcomeVar],
                          groupVar='All', returnPlot=False)
 
+print('Accuracy:')
+print(bootstrap_performance_metric(msi['evalPred'],
+                                   msi['evalTrue'],
+                                   metric='acc'))
+print('AUROC:')
+print(bootstrap_performance_metric(msi['evalScore'],
+                                   msi['evalTrue'],
+                                   metric='auroc'))
 # //////////////////////////////////////////////////////////////////////////////
 """Analysis 7 Reduce data set with UV regression coefficients/p-vals"""
 # //////////////////////////////////////////////////////////////////////////////
